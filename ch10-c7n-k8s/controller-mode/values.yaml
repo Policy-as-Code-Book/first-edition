@@ -1,0 +1,167 @@
+certManager:
+  enabled: yes
+  issuer:
+    create: yes
+  certificate:
+    create: yes
+    name: "{{ .Release.Name }}-issuer"
+
+controller:
+  # -- Annotations to apply to the controller
+  annotations: {}
+
+  # -- Create the controller that handles the webhook
+  create: true
+
+  # -- The name of the image to use
+  image: cloudcustodian/c7n:0.9.35.0
+
+  # -- The name of the controller
+  name: "{{ .Release.Name }}"
+
+  # -- The action to take when the request results in an error
+  onException: warn
+
+  # -- The port the deployment should listen on
+  port: 8443
+
+  # -- The controller's replica count
+  replicas: 1
+
+pod:
+  # -- Annotations to apply to the pod
+  annotations: {}
+
+  # -- Labels applied to the pods
+  labels:
+    app: c7n_kube
+
+  # -- The name of controller's pods
+  name: "{{ .Release.Name }}"
+
+policies:
+  configMap:
+    # -- The name of the ConfigMap
+    name: "{{ .Release.Name }}-policies"
+
+    # -- The policies to insert into the ConfigMap
+    policies:
+    # - name: 'warn-all-pods'
+    #   resource: 'k8s.pod'
+    #   mode:
+    #     type: k8s-admission
+    #     on-match: warn
+    #     operations:
+    #       - CREATE
+    #       - UPDATE
+    # - name: missing-required-labels-pods
+    #   mode:
+    #     type: k8s-admission
+    #     on-match: deny
+    #     operations:
+    #       - CREATE
+    #       - UPDATE
+    #   description: |
+    #     The following labels are required on all pods:
+
+    #     app
+    #     billing
+    #     env
+    #     owner
+    #   resource: k8s.pod
+    #   filters:
+    #     - and:
+    #       # - type: value
+    #       #   key: metadata.labels.test
+    #       #   value: c7n
+    #       - metadata.labels.test: c7n
+    #       - or:
+    #         - metadata.labels.app: absent
+    #         - metadata.labels.billing: absent
+    #         - metadata.labels.env: absent
+    #         - metadata.labels.owner": absent
+    - name: 'auto-label-userinfo'
+      resource: 'k8s.pod'
+      mode:
+        type: k8s-admission
+        on-match: allow
+        operations:
+          - CREATE
+          - UPDATE
+      filters:
+        - type: value
+          key: metadata.labels.test
+          value: c7n
+      actions:
+        - type: auto-label-user
+          key: owner
+    # - name: 'label-on-op'
+    #   resource: 'k8s.pod'
+    #   mode:
+    #     type: k8s-admission
+    #     on-match: allow
+    #     operations:
+    #       - CREATE
+    #       - UPDATE
+    #   filters:
+    #     - type: value
+    #       key: metadata.labels.test
+    #       value: c7n
+    #   actions:
+    #     - type: event-label
+    #       labels:
+    #         touched-by: c7n-kube
+
+  # -- The source of policies. One of "configMap" or "volume"
+  source: configMap
+
+  # -- The policy volume
+  volume: {}
+
+  # -- The policy volume mount
+  volumeMount: {}
+
+service:
+  # -- True to create the service
+  create: true
+
+  # -- The name of the service
+  name: "{{ .Release.Name }}"
+
+  # -- The service's port
+  port: 8443
+
+webhook:
+  # -- The static CA bundle. Necessary if not using cert-manager.
+  # caBundle: ""
+
+  # -- True to create the webhook
+  create: true
+
+  # -- How the webhook should react to an unexpected error: Ignore or Fail
+  failurePolicy: Ignore
+
+  # -- The webhook's match policy
+  matchPolicy: ""
+
+  # -- The webhook's namespace selector
+  namespaceSelector:
+    matchExpressions:               
+    - key: policy
+      operator: In
+      values: ["enabled"]
+
+
+  # -- The webhook's object selector
+  objectSelector: {}
+
+  # -- The resources that the webhook should monitor
+  rules:
+  - apiGroups:
+    - '*'
+    apiVersions:
+    - 'v1'
+    operations:
+    - CREATE
+    resources:
+    - pods

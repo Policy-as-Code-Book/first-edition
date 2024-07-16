@@ -1,0 +1,39 @@
+docker run -it --rm -p 8181:8181 -v $(pwd):/config -v $(pwd)/keys:/keys --platform linux/amd64 openpolicyagent/opa:0.44.0-rootless run -s --config-file=config/opa-conf.yaml
+
+docker run -it --rm -p 8181:8181 -v $(pwd):/config -e PROJECT_BUNDLE_KEY=`cat keys/key.pem.pub` \
+--platform linux/amd64 openpolicyagent/opa:0.44.0-rootless run -s --config-file=config/opa-conf.yaml
+
+KEY=`cat keys/key.pem.pub`
+docker run -it --rm -p 8181:8181 -v $(pwd):/config -e PROJECT_BUNDLE_KEY=${KEY} \
+--platform linux/amd64 openpolicyagent/opa:0.44.0-rootless run -s --config-file=config/opa-conf.yaml
+
+
+ssh-keygen -t rsa -f key.pem -m pem
+
+opa sign --signing-key ../key.pem --bundle .
+
+opa build .
+
+
+key: "-----BEGIN PUBLIC KEY-----\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDYkzTqAIKLq9lemKQS6PI4Au36yvFitvwA/9ydwYRBfQN2VG90eC2+zlUXxN4P8uomyzlZDIGwuyjWxKsRq/QaIfhiWsUgaWl26aVyQQQWkBkOxqiARS1RLKwaLyMkfKV9Y7N21TjjJHZExyNsu8us9eMgaW3AkezrH35Bt2xVVEKqC47YyKEG+pveMDMxiCt3KofcdpMTXtSOnZs9FLTu2S2vo6KdR7DgoWMeECpkem1e2rghGiBXhPca3oaMIYf/IP64LS9k6UqE7fOIYHqWwXFFUhZAaq0BJ7JeN2vbrxXk3WDT4Uvp0QaGvR4aN0tK9cksC8XDBT+IXj6v1Oh5k36rRna4m1Qn6it3dTSlwWYvRu7E8nta+HtDfruRqg1+gnURCzTFlwGhZP9Oc8t1IvlqEU70t2+glBY6LIi5xcuJ6WJvOVRSvPwC/hGWiErb6gdkkoySfLLRFxw6SqvNH8V6QNy+8+jtRvsPtb/jDeCtppkFTgGqXj/TRKOXsS8= jimmyray@bcd0741bbd20.ant.amazon.com\n\n-----END PUBLIC KEY-----"
+
+awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}'  keys/key.pem
+
+https://www.openpolicyagent.org/docs/latest/configuration/#keys
+
+openssl genrsa -out key.pem 2048
+openssl rsa -in key.pem -outform PEM -pubout -out key.pem.pub
+
+docker run -it --rm -p 8181:8181 -v $(pwd):/config -v $(pwd)/.opa:/.opa --platform linux/amd64 openpolicyagent/opa:0.46.1-rootless run -s --config-file=config/opa-conf.yaml
+
+https://www.openpolicyagent.org/docs/latest/configuration/#cli-runtime-overrides
+opa run -s --config-file opa-conf.yaml --set-file "keys.project-bundle-key.key=keys/key.pem.pub"
+
+opa build -b bundle-material --signing-key ../keys/key.pem -o bundles/signed-bundle.tar.gz
+
+
+https://10.0.2.2:8443/v1/bundles/signed-bundle.tar.gz
+
+https://sidney.kochman.org/2018/etag-middleware-go/
+https://github.com/wtg/shuttletracker/blob/cdd56dc4aeca922f333c913f09c1796851d6f677/api/etag.go
+

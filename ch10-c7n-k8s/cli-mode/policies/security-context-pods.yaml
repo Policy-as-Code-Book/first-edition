@@ -1,0 +1,25 @@
+policies:
+  - name: security-context-pods
+    description: |
+      Collects pods with no container securityContext element.
+    resource: k8s.pod
+    filters:
+      - type: value
+        key: metadata.labels.test
+        value: c7n
+      - type: list-item
+        key: spec.containers[]
+        attrs:
+          # - not:
+          - type: value
+            key: security_context
+            value: empty
+    actions:
+      # - type: delete
+      - type: patch
+        options:
+          metadata:
+            labels:
+              'compliance-issue': 'sec-con-missing' 
+            annotations:
+              'compliance-issue': 'One or more containers are missing the securityContext element.'   

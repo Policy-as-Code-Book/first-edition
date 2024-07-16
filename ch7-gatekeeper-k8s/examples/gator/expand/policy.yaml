@@ -1,0 +1,35 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sdenyall
+  labels:
+    policy.jimmyray.io/gatekeeper: template 
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sDenyAll
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sdenyall
+
+        violation[{"msg": msg}] {
+          input.review.kind.kind == "Pod"
+          # msg := sprintf("REVIEW OBJECT: %v", [input.review])
+          msg := sprintf("INPUT: %v", [input])
+        }
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sDenyAll
+metadata:
+  name: deny-all-pods
+  labels:
+    policy.jimmyray.io/gatekeeper: constraint
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces:
+      - "policy-test"

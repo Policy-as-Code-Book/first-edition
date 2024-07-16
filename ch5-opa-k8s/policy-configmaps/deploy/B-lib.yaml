@@ -1,0 +1,103 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: lib-k8s-helpers
+  namespace: opa
+  labels:
+    app: opa
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+    openpolicyagent.org/policy: rego
+data:
+  main: |
+    package lib.k8s.helpers
+
+    # import data.kubernetes.admission
+
+    allowed_operations = allowed_ops {
+      allowed_ops := {"CREATE", "UPDATE"}
+    }
+
+    request_operation = op {
+      op := input.request.operation
+    }
+
+    request_metadata_labels = labels {
+      labels := input.request.object.metadata.labels
+    }
+
+    request_spec_template_metadata_labels = labels {
+      labels := input.request.object.spec.template.metadata.labels
+    }
+
+    deployment_error = e {
+      e := "DEPLOYMENT_INVALID"
+    }
+
+    deployment_containers = c {
+      c := input.request.object.spec.template.spec.containers
+    }
+
+    deployment_pod_spec = ps {
+      ps := input.request.object.spec.template.spec
+    }
+
+    required_deployment_labels = l {
+      l := {"app", "billing", "env", "owner"}
+    }
+
+    deployment_role = dr {
+      dr := input.request.object.spec.template.metadata.annotations["iam.amazonaws.com/role"]
+    }
+
+    service_error = e {
+      e := "SERVICE_INVALID"
+    }
+
+    allowed_ext_ips = l {
+      l := ["1.1.1.1","2.2.2.2","3.3.3.3","4.4.4.4"]
+    }
+
+    ips_allowed(a,x) {
+      allowedIPs := {ip | ip := a[_]}
+      externalIPs := {ip | ip := x[_]}
+      forbiddenIPs := externalIPs - allowedIPs
+      count(forbiddenIPs) > 0
+    }
+
+    request_object = o {
+      o := input.request.object
+    }
+
+    request_id = value {
+      value := sprintf("%v/%v/%v", [
+        request_namespace,
+        request_name,
+        request_kind
+      ])
+    }
+
+    request_name = value {
+      value := input.request.object.metadata.name
+    }
+
+    else = value {
+      value := "NOT_FOUND"
+    }
+
+    request_namespace = value {
+      value := input.request.object.metadata.namespace
+    }
+
+    else = value {
+      value := "NOT_FOUND"
+    }
+
+    request_kind = value {
+      value := input.request.kind.kind
+    }
+
+    else = value {
+      value := "NOT_FOUND"
+    }

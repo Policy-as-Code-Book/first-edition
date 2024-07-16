@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opa-policy-main
+  namespace: opa
+  labels:
+    app: opa
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+    openpolicyagent.org/policy: rego
+data:
+  main: |
+    package system
+
+    import data.kubernetes.admission
+
+    main = {
+      "apiVersion": "admission.k8s.io/v1",
+      "kind": "AdmissionReview",
+      "response": response,
+    }
+
+    default uid = ""
+
+    uid = input.request.uid
+
+    response = {
+        "allowed": false,
+        "uid": uid,
+        "status": {
+            "reason": reason,
+        },
+    } {
+        reason = concat(", ", admission.deny)
+        reason != ""
+    }
+    else = {"allowed": true, "uid": uid}
+
+

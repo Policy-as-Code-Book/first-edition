@@ -1,0 +1,13 @@
+services:
+  opcr-registry:
+    url: https://opcr.io
+    type: oci
+
+bundles:
+  project:
+    service: opcr-registry
+    resource: <RESOURCE_URL>
+    persist: true
+    polling:
+      min_delay_seconds: 10
+      max_delay_seconds: 20

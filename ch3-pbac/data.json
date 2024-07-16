@@ -1,0 +1,23 @@
+{
+  "employees": {
+    "position": {
+      "staff": ["susie", "griffin", "pam", "paul", "floyd"],
+      "manager": ["ivy"],
+      "engineer": ["jimmy", "patty"]
+    },
+    "admin": {
+      "parts": ["Group1", "Group3"],
+      "service": ["Group1", "Group2"]
+    },
+    "groups": [
+      { "name": "Group1", "members": ["ivy"] },
+      { "name": "Group2", "members": ["susie", "griffin", "pam", "paul", "floyd"] },
+      { "name": "Group3", "members": ["jimmy", "patty"] }
+    ],
+    "shifts": [
+      { "id": "D", "start": 9, "end": 17, "members":["ivy", "jimmy", "susie","griffin"]},
+      { "id": "N", "start": 17, "end": 1, "members":["patty","pam", "floyd"]},
+      { "id": "G", "start": 1, "end": 9, "members":["paul"]}
+    ]
+  }
+}

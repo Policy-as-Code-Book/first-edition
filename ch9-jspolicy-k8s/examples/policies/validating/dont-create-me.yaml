@@ -1,0 +1,30 @@
+apiVersion: policy.jspolicy.com/v1beta1
+kind: JsPolicy
+metadata:
+  name: "dont-create-me.jimmyray.io"
+spec:
+  operations: ["CREATE"]
+  resources: ["pods"]
+  scope: Namespaced
+  # namespaceSelector:
+  #   matchLabels:               
+  #     policy: enabled
+  namespaceSelector:
+    matchExpressions:               
+    - key: policy
+      operator: In
+      values: ["enabled"]
+  objectSelector:                   
+    matchLabels:
+      env: dev
+  javascript: |
+    // print will print a message to jsPolicies pod log
+    print("Incoming request for: " + request.object.metadata?.name)
+
+    // validate that the pod does not have an annotation called "dont-create-me"
+    if (request.object.metadata?.annotations?.["dont-create-me"]) {
+      // deny the request with the following message. deny() will end execution of the script as well
+      deny("dont-create-me annotation is not allowed"); 
+    }
+
+    // if no deny() or allow() is called, request is allowed

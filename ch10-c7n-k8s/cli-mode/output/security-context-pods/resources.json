@@ -1,0 +1,462 @@
+[
+  {
+    "api_version": null,
+    "kind": null,
+    "metadata": {
+      "annotations": {
+        "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Pod\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"test\",\"billing\":\"lob-cc\",\"env\":\"dev\",\"owner\":\"jimmy\",\"test\":\"c7n\"},\"name\":\"test-pod-1\",\"namespace\":\"test\"},\"spec\":{\"containers\":[{\"image\":\"registry.k8s.io/pause:3.1\",\"imagePullPolicy\":\"Always\",\"name\":\"c1\"},{\"image\":\"registry.k8s.io/pause:3.1\",\"imagePullPolicy\":\"Always\",\"name\":\"c2\"}]}}\n"
+      },
+      "creation_timestamp": "2023-07-05T13:59:26+00:00",
+      "deletion_grace_period_seconds": null,
+      "deletion_timestamp": null,
+      "finalizers": null,
+      "generate_name": null,
+      "generation": null,
+      "labels": {
+        "app": "test",
+        "billing": "lob-cc",
+        "env": "dev",
+        "owner": "jimmy",
+        "test": "c7n"
+      },
+      "managed_fields": [
+        {
+          "api_version": "v1",
+          "fields_type": "FieldsV1",
+          "fields_v1": {
+            "f:metadata": {
+              "f:annotations": {
+                ".": {},
+                "f:kubectl.kubernetes.io/last-applied-configuration": {}
+              },
+              "f:labels": {
+                ".": {},
+                "f:app": {},
+                "f:billing": {},
+                "f:env": {},
+                "f:owner": {},
+                "f:test": {}
+              }
+            },
+            "f:spec": {
+              "f:containers": {
+                "k:{\"name\":\"c1\"}": {
+                  ".": {},
+                  "f:image": {},
+                  "f:imagePullPolicy": {},
+                  "f:name": {},
+                  "f:resources": {},
+                  "f:terminationMessagePath": {},
+                  "f:terminationMessagePolicy": {}
+                },
+                "k:{\"name\":\"c2\"}": {
+                  ".": {},
+                  "f:image": {},
+                  "f:imagePullPolicy": {},
+                  "f:name": {},
+                  "f:resources": {},
+                  "f:terminationMessagePath": {},
+                  "f:terminationMessagePolicy": {}
+                }
+              },
+              "f:dnsPolicy": {},
+              "f:enableServiceLinks": {},
+              "f:restartPolicy": {},
+              "f:schedulerName": {},
+              "f:securityContext": {},
+              "f:terminationGracePeriodSeconds": {}
+            }
+          },
+          "manager": "kubectl-client-side-apply",
+          "operation": "Update",
+          "subresource": null,
+          "time": "2023-07-05T13:59:26+00:00"
+        },
+        {
+          "api_version": "v1",
+          "fields_type": "FieldsV1",
+          "fields_v1": {
+            "f:status": {
+              "f:conditions": {
+                "k:{\"type\":\"ContainersReady\"}": {
+                  ".": {},
+                  "f:lastProbeTime": {},
+                  "f:lastTransitionTime": {},
+                  "f:status": {},
+                  "f:type": {}
+                },
+                "k:{\"type\":\"Initialized\"}": {
+                  ".": {},
+                  "f:lastProbeTime": {},
+                  "f:lastTransitionTime": {},
+                  "f:status": {},
+                  "f:type": {}
+                },
+                "k:{\"type\":\"Ready\"}": {
+                  ".": {},
+                  "f:lastProbeTime": {},
+                  "f:lastTransitionTime": {},
+                  "f:status": {},
+                  "f:type": {}
+                }
+              },
+              "f:containerStatuses": {},
+              "f:hostIP": {},
+              "f:phase": {},
+              "f:podIP": {},
+              "f:podIPs": {
+                ".": {},
+                "k:{\"ip\":\"10.244.0.20\"}": {
+                  ".": {},
+                  "f:ip": {}
+                }
+              },
+              "f:startTime": {}
+            }
+          },
+          "manager": "kubelet",
+          "operation": "Update",
+          "subresource": "status",
+          "time": "2023-07-05T13:59:29+00:00"
+        }
+      ],
+      "name": "test-pod-1",
+      "namespace": "test",
+      "owner_references": null,
+      "resource_version": "66834",
+      "self_link": null,
+      "uid": "3062b4cc-404a-4cca-8917-fdb58fea91b7"
+    },
+    "spec": {
+      "active_deadline_seconds": null,
+      "affinity": null,
+      "automount_service_account_token": null,
+      "containers": [
+        {
+          "args": null,
+          "command": null,
+          "env": null,
+          "env_from": null,
+          "image": "registry.k8s.io/pause:3.1",
+          "image_pull_policy": "Always",
+          "lifecycle": null,
+          "liveness_probe": null,
+          "name": "c1",
+          "ports": null,
+          "readiness_probe": null,
+          "resources": {
+            "claims": null,
+            "limits": null,
+            "requests": null
+          },
+          "security_context": null,
+          "startup_probe": null,
+          "stdin": null,
+          "stdin_once": null,
+          "termination_message_path": "/dev/termination-log",
+          "termination_message_policy": "File",
+          "tty": null,
+          "volume_devices": null,
+          "volume_mounts": [
+            {
+              "mount_path": "/var/run/secrets/kubernetes.io/serviceaccount",
+              "mount_propagation": null,
+              "name": "kube-api-access-45hxg",
+              "read_only": true,
+              "sub_path": null,
+              "sub_path_expr": null
+            }
+          ],
+          "working_dir": null,
+          "c7n:MatchedFilters": [
+            "security_context"
+          ]
+        },
+        {
+          "args": null,
+          "command": null,
+          "env": null,
+          "env_from": null,
+          "image": "registry.k8s.io/pause:3.1",
+          "image_pull_policy": "Always",
+          "lifecycle": null,
+          "liveness_probe": null,
+          "name": "c2",
+          "ports": null,
+          "readiness_probe": null,
+          "resources": {
+            "claims": null,
+            "limits": null,
+            "requests": null
+          },
+          "security_context": null,
+          "startup_probe": null,
+          "stdin": null,
+          "stdin_once": null,
+          "termination_message_path": "/dev/termination-log",
+          "termination_message_policy": "File",
+          "tty": null,
+          "volume_devices": null,
+          "volume_mounts": [
+            {
+              "mount_path": "/var/run/secrets/kubernetes.io/serviceaccount",
+              "mount_propagation": null,
+              "name": "kube-api-access-45hxg",
+              "read_only": true,
+              "sub_path": null,
+              "sub_path_expr": null
+            }
+          ],
+          "working_dir": null,
+          "c7n:MatchedFilters": [
+            "security_context"
+          ]
+        }
+      ],
+      "dns_config": null,
+      "dns_policy": "ClusterFirst",
+      "enable_service_links": true,
+      "ephemeral_containers": null,
+      "host_aliases": null,
+      "host_ipc": null,
+      "host_network": null,
+      "host_pid": null,
+      "host_users": null,
+      "hostname": null,
+      "image_pull_secrets": null,
+      "init_containers": null,
+      "node_name": "minikube",
+      "node_selector": null,
+      "os": null,
+      "overhead": null,
+      "preemption_policy": "PreemptLowerPriority",
+      "priority": 0,
+      "priority_class_name": null,
+      "readiness_gates": null,
+      "resource_claims": null,
+      "restart_policy": "Always",
+      "runtime_class_name": null,
+      "scheduler_name": "default-scheduler",
+      "scheduling_gates": null,
+      "security_context": {
+        "fs_group": null,
+        "fs_group_change_policy": null,
+        "run_as_group": null,
+        "run_as_non_root": null,
+        "run_as_user": null,
+        "se_linux_options": null,
+        "seccomp_profile": null,
+        "supplemental_groups": null,
+        "sysctls": null,
+        "windows_options": null
+      },
+      "service_account": "default",
+      "service_account_name": "default",
+      "set_hostname_as_fqdn": null,
+      "share_process_namespace": null,
+      "subdomain": null,
+      "termination_grace_period_seconds": 30,
+      "tolerations": [
+        {
+          "effect": "NoExecute",
+          "key": "node.kubernetes.io/not-ready",
+          "operator": "Exists",
+          "toleration_seconds": 300,
+          "value": null
+        },
+        {
+          "effect": "NoExecute",
+          "key": "node.kubernetes.io/unreachable",
+          "operator": "Exists",
+          "toleration_seconds": 300,
+          "value": null
+        }
+      ],
+      "topology_spread_constraints": null,
+      "volumes": [
+        {
+          "aws_elastic_block_store": null,
+          "azure_disk": null,
+          "azure_file": null,
+          "cephfs": null,
+          "cinder": null,
+          "config_map": null,
+          "csi": null,
+          "downward_api": null,
+          "empty_dir": null,
+          "ephemeral": null,
+          "fc": null,
+          "flex_volume": null,
+          "flocker": null,
+          "gce_persistent_disk": null,
+          "git_repo": null,
+          "glusterfs": null,
+          "host_path": null,
+          "iscsi": null,
+          "name": "kube-api-access-45hxg",
+          "nfs": null,
+          "persistent_volume_claim": null,
+          "photon_persistent_disk": null,
+          "portworx_volume": null,
+          "projected": {
+            "default_mode": 420,
+            "sources": [
+              {
+                "config_map": null,
+                "downward_api": null,
+                "secret": null,
+                "service_account_token": {
+                  "audience": null,
+                  "expiration_seconds": 3607,
+                  "path": "token"
+                }
+              },
+              {
+                "config_map": {
+                  "items": [
+                    {
+                      "key": "ca.crt",
+                      "mode": null,
+                      "path": "ca.crt"
+                    }
+                  ],
+                  "name": "kube-root-ca.crt",
+                  "optional": null
+                },
+                "downward_api": null,
+                "secret": null,
+                "service_account_token": null
+              },
+              {
+                "config_map": null,
+                "downward_api": {
+                  "items": [
+                    {
+                      "field_ref": {
+                        "api_version": "v1",
+                        "field_path": "metadata.namespace"
+                      },
+                      "mode": null,
+                      "path": "namespace",
+                      "resource_field_ref": null
+                    }
+                  ]
+                },
+                "secret": null,
+                "service_account_token": null
+              }
+            ]
+          },
+          "quobyte": null,
+          "rbd": null,
+          "scale_io": null,
+          "secret": null,
+          "storageos": null,
+          "vsphere_volume": null
+        }
+      ]
+    },
+    "status": {
+      "conditions": [
+        {
+          "last_probe_time": null,
+          "last_transition_time": "2023-07-05T13:59:26+00:00",
+          "message": null,
+          "reason": null,
+          "status": "True",
+          "type": "Initialized"
+        },
+        {
+          "last_probe_time": null,
+          "last_transition_time": "2023-07-05T13:59:29+00:00",
+          "message": null,
+          "reason": null,
+          "status": "True",
+          "type": "Ready"
+        },
+        {
+          "last_probe_time": null,
+          "last_transition_time": "2023-07-05T13:59:29+00:00",
+          "message": null,
+          "reason": null,
+          "status": "True",
+          "type": "ContainersReady"
+        },
+        {
+          "last_probe_time": null,
+          "last_transition_time": "2023-07-05T13:59:26+00:00",
+          "message": null,
+          "reason": null,
+          "status": "True",
+          "type": "PodScheduled"
+        }
+      ],
+      "container_statuses": [
+        {
+          "container_id": "docker://80d203d63bad5ca646f2a3cf3953948e5a825c726b2d413d892aaeae854a5a65",
+          "image": "registry.k8s.io/pause:3.1",
+          "image_id": "docker-pullable://registry.k8s.io/pause@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea",
+          "last_state": {
+            "running": null,
+            "terminated": null,
+            "waiting": null
+          },
+          "name": "c1",
+          "ready": true,
+          "restart_count": 0,
+          "started": true,
+          "state": {
+            "running": {
+              "started_at": "2023-07-05T13:59:27+00:00"
+            },
+            "terminated": null,
+            "waiting": null
+          }
+        },
+        {
+          "container_id": "docker://cf26df6f8aac1309cc788ae3cf97c81644b777e205e315005dee9d6933c2f602",
+          "image": "registry.k8s.io/pause:3.1",
+          "image_id": "docker-pullable://registry.k8s.io/pause@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea",
+          "last_state": {
+            "running": null,
+            "terminated": null,
+            "waiting": null
+          },
+          "name": "c2",
+          "ready": true,
+          "restart_count": 0,
+          "started": true,
+          "state": {
+            "running": {
+              "started_at": "2023-07-05T13:59:28+00:00"
+            },
+            "terminated": null,
+            "waiting": null
+          }
+        }
+      ],
+      "ephemeral_container_statuses": null,
+      "host_ip": "192.168.49.2",
+      "init_container_statuses": null,
+      "message": null,
+      "nominated_node_name": null,
+      "phase": "Running",
+      "pod_ip": "10.244.0.20",
+      "pod_i_ps": [
+        {
+          "ip": "10.244.0.20"
+        }
+      ],
+      "qos_class": "BestEffort",
+      "reason": null,
+      "start_time": "2023-07-05T13:59:26+00:00"
+    },
+    "c7n:MatchedFilters": [
+      "metadata.labels.test"
+    ],
+    "c7n:ListItemMatches": [
+      "spec.containers[][0]",
+      "spec.containers[][1]"
+    ]
+  }
+]

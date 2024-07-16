@@ -1,0 +1,15 @@
+2023-07-02 23:08:32,771 - custodian.policy - DEBUG - Running policy:collect-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-02 23:08:32,774 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-02 23:08:32,815 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-02 23:08:32,815 - custodian.policy - INFO - policy:collect-pods resource:k8s.pod region: count:1 time:0.04
+2023-07-02 23:08:32,816 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:collect-pods restype:k8s.pod scope:policy
+2024-03-14 13:29:01,619 - custodian.policy - DEBUG - Running policy:collect-pods resource:k8s.pod region:default c7n:0.9.34
+2024-03-14 13:29:01,622 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:55001
+2024-03-14 13:29:01,663 - custodian.resources.pod - DEBUG - Filtered from 7 to 0 pod
+2024-03-14 13:29:01,663 - custodian.policy - INFO - policy:collect-pods resource:k8s.pod region: count:0 time:0.04
+2024-03-14 13:29:01,664 - custodian.output - DEBUG - metric:ResourceCount Count:0 policy:collect-pods restype:k8s.pod scope:policy
+2024-03-14 13:30:07,167 - custodian.policy - DEBUG - Running policy:collect-pods resource:k8s.pod region:default c7n:0.9.34
+2024-03-14 13:30:07,169 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:55001
+2024-03-14 13:30:07,201 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2024-03-14 13:30:07,201 - custodian.policy - INFO - policy:collect-pods resource:k8s.pod region: count:1 time:0.03
+2024-03-14 13:30:07,202 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:collect-pods restype:k8s.pod scope:policy

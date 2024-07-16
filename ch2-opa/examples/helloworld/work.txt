@@ -1,0 +1,45 @@
+opa run helloworld.rego repl.input:helloworld.yaml
+-it --rm openpolicyagent/opa:0.44.0
+docker run -it --rm -v $(pwd):/helloworld openpolicyagent/opa:0.44.0 run helloworld/helloworld.rego repl.input:helloworld/helloworld.yaml
+
+docker run -it --rm -v $(pwd):/helloworld openpolicyagent/opa:0.44.0 eval -i helloworld/helloworld.json -d helloworld/helloworld.rego "data.examples.ch2.hello"
+
+docker run -it --rm -v $(pwd):/helloworld openpolicyagent/opa:0.44.0 eval -i helloworld/helloworld.json -d helloworld/helloworld.rego "data.examples.ch2.hello"
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+{
+  "result": [
+    {
+      "expressions": [
+        {
+          "value": "world",
+          "text": "data.examples.ch2.hello",
+          "location": {
+            "row": 1,
+            "col": 1
+          }
+        }
+      ]
+    }
+  ]
+}
+
+docker run -it --rm -p 8181:8181 -v $(pwd):/helloworld openpolicyagent/opa:0.44.0 run -s --bundle helloworld/.
+{"addrs":[":8181"],"diagnostic-addrs":[],"level":"info","msg":"Initializing server.","time":"2022-08-24T13:20:55-04:00"}
+
+
+docker run -it --rm -v $(pwd):/helloworld openpolicyagent/opa:0.44.0 exec helloworld/helloworld.json --decision examples/ch2/hello -b helloworld/bundle.tar.gz
+
+opa run -s -l debug --set services.play.url=https://play.openpolicyagent.org \
+--set bundles.play.resource=bundles/<BUNDLE_ID>
+
+docker run -it --rm --platform linux/amd64 -v $(pwd)/temp:/.opa \
+-p 8181:8181 openpolicyagent/opa:0.46.1-rootless run -s \
+--set services.play.url=https://play.openpolicyagent.org \
+--set bundles.play.resource=bundles/<BUNDLE_ID>
+
+{
+    "input":{
+        "message":"world"
+    }
+}
+

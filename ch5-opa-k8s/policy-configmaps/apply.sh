@@ -1,0 +1,2 @@
+kubectl apply -f ./deploy/.
+

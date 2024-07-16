@@ -1,0 +1,6 @@
+- apiGroups:
+  - ""
+  resources:
+  - deployments
+  verbs:
+  - delete

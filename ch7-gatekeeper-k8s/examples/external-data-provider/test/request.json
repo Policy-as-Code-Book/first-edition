@@ -1,0 +1,10 @@
+{
+    "apiVersion": "externaldata.gatekeeper.sh/v1beta1",
+    "kind": "ProviderRequest",
+    "request": {
+        "keys": [
+            "gcr.io/google-containers/pause:3.2",
+            "gcr.io/google-containers/pause:3.3"
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+2023-07-03 00:02:03,442 - custodian.policy - DEBUG - Running policy:delete-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-03 00:02:03,444 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 00:02:03,495 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-03 00:02:03,496 - custodian.policy - INFO - policy:delete-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-03 00:02:03,500 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 00:02:03,526 - custodian.policy - INFO - policy:delete-pods action:deleteresource resources:1 execution_time:0.03
+2023-07-03 00:02:03,526 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:delete-pods restype:k8s.pod scope:policy
+2024-03-14 13:43:17,748 - custodian.policy - DEBUG - Running policy:delete-pods resource:k8s.pod region:default c7n:0.9.34
+2024-03-14 13:43:17,751 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:55001
+2024-03-14 13:43:17,794 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2024-03-14 13:43:17,794 - custodian.policy - INFO - policy:delete-pods resource:k8s.pod region: count:1 time:0.05
+2024-03-14 13:43:17,797 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:55001
+2024-03-14 13:43:17,817 - custodian.policy - INFO - policy:delete-pods action:deleteresource resources:1 execution_time:0.02
+2024-03-14 13:43:17,818 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:delete-pods restype:k8s.pod scope:policy

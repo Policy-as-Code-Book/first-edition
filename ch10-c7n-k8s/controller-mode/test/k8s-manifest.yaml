@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test
+  labels:
+    # pod-security.kubernetes.io/audit: restricted
+    # pod-security.kubernetes.io/enforce: restricted
+    # pod-security.kubernetes.io/warn: restricted
+    app: test
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+    policy: enabled
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-1
+  namespace: test
+  # labels:
+  #   app: test
+  #   billing: lob-cc
+  #   env: dev
+  #   owner: jimmy
+    # test: c7n
+spec:
+  containers:
+    - name: c1
+      image: registry.k8s.io/pause:3.1
+      imagePullPolicy: Always
+      # securityContext:
+      #   allowPrivilegeEscalation: false  
+      #   runAsUser: 1000  
+      #   readOnlyRootFilesystem: true
+      #   runAsNonRoot: true
+      #   capabilities:
+      #     drop: ["ALL"]  
+      #   seccompProfile:
+      #     type: "RuntimeDefault"
+    - name: c2
+      image: registry.k8s.io/pause:3.1
+      imagePullPolicy: Always
+
+

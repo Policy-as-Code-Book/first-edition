@@ -1,0 +1,67 @@
+apiVersion : kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: change-deprecated-registry
+  annotations:
+    policies.kyverno.io/title: Change Deprecated Registry
+    policies.kyverno.io/category: Best Practices, EKS Best Practices
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/minversion: 1.6.0
+    policies.kyverno.io/description: >- 
+      Images for Kubernetes 1.27 will not be available in the k8s.gcr.io image registry.
+      Please read our announcement for more details.
+      https://kubernetes.io/blog/2023/02/06/k8s-gcr-io-freeze-announcement/       
+spec:
+  mutateExistingOnPolicyUpdate: false
+  rules:
+  - name: change-deprecated-containers
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    preconditions:
+      all:
+      - key: "{{request.operation || 'BACKGROUND'}}"
+        operator: AnyIn
+        value:
+        - CREATE
+        - UPDATE
+      - key: k8s.gcr.io
+        operator: AnyIn
+        value: "{{ images.containers.*.registry[] || `[]` }}" 
+    mutate:
+      foreach:
+      - list: "request.object.spec.containers"
+        patchStrategicMerge:
+          spec:
+            containers:
+            - name: "{{ element.name }}"           
+              image: registry.k8s.io/{{ images.containers."{{element.name}}".path}}:{{images.containers."{{element.name}}".tag}}
+  - name: change-deprecated-initcontainers
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    preconditions:
+      all:
+      - key: "{{request.operation || 'BACKGROUND'}}"
+        operator: AnyIn
+        value:
+        - CREATE
+        - UPDATE
+      - key: "{{ request.object.spec.initContainers[] || '' | length(@) }}"
+        operator: GreaterThanOrEquals
+        value: 1
+      - key: k8s.gcr.io
+        operator: AnyIn
+        value: "{{ images.initContainers.*.registry[] || `[]` }}" 
+    mutate:
+      foreach:
+      - list: "request.object.spec.initContainers"
+        patchStrategicMerge:
+          spec:
+            initContainers:
+            - name: "{{ element.name }}"           
+              image: registry.k8s.io/{{ images.initContainers."{{element.name}}".name}}:{{images.initContainers."{{element.name}}".tag}}

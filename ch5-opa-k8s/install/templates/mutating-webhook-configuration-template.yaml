@@ -1,0 +1,32 @@
+kind: MutatingWebhookConfiguration
+apiVersion: admissionregistration.k8s.io/v1
+metadata:
+  name: opa-mutating-webhook
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+webhooks:
+  - name: mutating-webhook.openpolicyagent.org
+    namespaceSelector:
+      matchExpressions:
+      - key: openpolicyagent.org/webhook
+        operator: NotIn
+        values:
+        - ignore
+    rules:
+    - operations: ["CREATE", "UPDATE"]
+      apiGroups: ["*"]
+      apiVersions: ["*"]
+      resources: ["pods"]
+    clientConfig:
+      caBundle: __CA_BUNDLE_VALUE__
+      service:
+        namespace: opa
+        name: opa
+        path: /v0/data/library/kubernetes/admission/mutating/main
+        port: 443
+      # url: https://opa.opa.svc.cluster.local/v0/data/library/kubernetes/admission/mutating/main
+    admissionReviewVersions: ["v1"]
+    sideEffects: None

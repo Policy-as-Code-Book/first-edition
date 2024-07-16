@@ -1,0 +1,16 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sSvcClusterIpExternalIps
+metadata:
+  name: svc-clusterip-ext-ips
+  labels:
+    policy.jimmyray.io/gatekeeper: constraint
+spec:
+  match:
+    kinds:
+      - apiGroups: ["*"]
+        kinds: ["Service"]
+    namespaces:
+      - "policy-test"
+  parameters:
+    allowedOps: ["CREATE","UPDATE"]
+    errMsg: "INVALID_SERVICE_EXTERNAL_IPS"

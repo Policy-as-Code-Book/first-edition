@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kyverno-cleanup-orphaned-pods
+  labels:
+    app.kubernetes.io/component: cleanup-controller
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/name: kyverno-cleanup-controller
+rules:
+  - verbs:
+      - list
+      - delete
+    apiGroups:
+      - ""
+    resources:
+      - pods

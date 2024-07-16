@@ -1,0 +1,6 @@
+{
+    "query": "msg := input.message\nmsg == \"world\"",
+    "input": {
+        "message": "world"
+    }
+}

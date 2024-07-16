@@ -1,0 +1,11 @@
+config:
+  webhooks:
+  - namespaceSelector:
+      matchExpressions:
+      - key: kubernetes.io/metadata.name
+        operator: NotIn
+        values:
+        - kyverno
+        - kube-system
+replicaCount: 1
+pullPolicy: Always

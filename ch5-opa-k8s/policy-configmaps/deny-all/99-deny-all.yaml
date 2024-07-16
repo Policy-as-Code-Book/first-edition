@@ -1,0 +1,21 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: deny-all-pods
+  namespace: opa
+  labels:
+    app: opa
+    owner: jimmy
+    openpolicyagent.org/policy: rego
+data:
+  main: |
+    package lib.k8s.admission
+
+    import data.lib.k8s.helpers as helpers
+    import future.keywords.in
+
+    deny[msg] {
+      input.request.kind.kind == "Pod"
+      input.request.operation in ["CREATE", "DELETE", "UPDATE"]
+      msg = sprintf("Request object: %q",[helpers.request_object])
+    }

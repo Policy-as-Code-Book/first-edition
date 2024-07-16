@@ -1,0 +1,63 @@
+{
+    "format_version": "1.2",
+    "terraform_version": "1.5.0",
+    "variables": {
+        "ami_type_al2": {
+            "value": "AL2_x86_64"
+        },
+        "capacity_type": {
+            "value": "ON_DEMAND"
+        },
+        "cluster_endpoint_private": {
+            "value": true
+        },
+        "cluster_endpoint_public": {
+            "value": true
+        },
+        "cluster_log_types": {
+            "value": [
+                "audit",
+                "api",
+                "authenticator",
+                "controllerManager",
+                "scheduler"
+            ]
+        },
+        "cluster_name": {
+            "value": "tf-test"
+        },
+        "cluster_version": {
+            "value": "1.25"
+        },
+        "mng_al2_name": {
+            "value": "tf-test-al2"
+        },
+        "mng_instance_types": {
+            "value": [
+                "m5.large"
+            ]
+        },
+        "mng_labels": {
+            "value": {
+                "billing": "lob-cc",
+                "env": "dev",
+                "owner": "jimmyray"
+            }
+        },
+        "mng_policies": {
+            "value": [
+                "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+                "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+                "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+            ]
+        },
+        "mng_tags": {
+            "value": {
+                "Terraform": "true"
+            }
+        },
+        "region": {
+            "value": "us-east-2"
+        }
+    }
+}

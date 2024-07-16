@@ -1,0 +1,10 @@
+python3 -m venv prowler-env
+source prowler-env/bin/activate
+
+pip3 install prowler
+prowler -v
+
+prowler aws --services ec2
+
+prowler aws --services lambda
+

@@ -1,0 +1,20 @@
+FROM alpine:latest
+
+RUN apk add --no-cache git curl bash jq coreutils ca-certificates
+
+ENV SECRET_KEY=asdsadasdasdasdasda
+ENV AWS_ACCESS_KEY_ID=asdsadasdasdasdasda
+ENV AWS_SECRET_ACCESS_KEY=asdsadasdasdasdasda
+
+ADD https://example.com/files/somefile somefile
+
+# WGet some tar file
+ARG FILE_LINK="https://example.com/files/somefile.tar.gz"
+ARG TAR_FILE="somefile.tar.gz"
+RUN wget -O ${TAR_FILE} ${FILE_LINK} \
+ && tar -xzf ${TAR_FILE} \
+ && rm ${TAR_FILE}
+
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]

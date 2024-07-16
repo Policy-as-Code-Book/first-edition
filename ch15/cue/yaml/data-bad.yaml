@@ -1,0 +1,8 @@
+policies:
+  - Name: Deny-2tags
+    Tag: deny
+  - Name: Warn-labels
+    Tag: warn
+    Label: InvalidItem
+  - Name: Violate-annotations
+    Tag: "violation"

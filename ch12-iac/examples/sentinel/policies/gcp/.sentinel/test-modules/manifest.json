@@ -1,0 +1,28 @@
+{
+	"records": [
+		{
+			"key": "test/required_labels/pass/common-functions",
+			"source": "../../common/functions.sentinel",
+			"sourceSum": "",
+			"dest": "./ch12-iac/examples/sentinel/policies/gcp/common/functions.sentinel"
+		},
+		{
+			"key": "test/required-labels/fail/common-functions",
+			"source": "../../common/functions.sentinel",
+			"sourceSum": "",
+			"dest": "./ch12-iac/examples/sentinel/policies/gcp/common/functions.sentinel"
+		},
+		{
+			"key": "test/required-labels/pass/common-functions",
+			"source": "../../common/functions.sentinel",
+			"sourceSum": "",
+			"dest": "./ch12-iac/examples/sentinel/policies/gcp/common/functions.sentinel"
+		},
+		{
+			"key": "test/required_labels/fail/common-functions",
+			"source": "../../common/functions.sentinel",
+			"sourceSum": "",
+			"dest": "./ch12-iac/examples/sentinel/policies/gcp/common/functions.sentinel"
+		}
+	]
+}

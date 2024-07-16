@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Tue, 24 Jan 2023 14:57:02 GMT
+Content-Length: 279
+Connection: close
+
+{"result":[{"id":"helloworld/server-container/bundle.tar.gz/bundle/helloworld.rego","raw":"package examples.ch2\n\nimport data.examples.ch2.hello\n","ast":{"package":{"path":[{"type":"var","value":"data"},{"type":"string","value":"examples"},{"type":"string","value":"ch2"}]}}}]}

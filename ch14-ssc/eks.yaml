@@ -1,0 +1,17 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: test
+  region: us-east-2
+  version: "1.22"
+  tags:
+    owner: jimmyray
+    env: dev
+    billing: lob-cc
+
+iam:
+  withOIDC: true
+
+secretsEncryption:
+  keyARN: "arn:aws:kms:us-east-2:123456789012:key/9e23ba0e…"

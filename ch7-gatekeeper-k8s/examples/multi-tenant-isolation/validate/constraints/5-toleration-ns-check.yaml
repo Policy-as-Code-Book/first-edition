@@ -1,0 +1,19 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sNsTolerationCheckPod
+metadata:
+  name: toleration-ns-check-pod
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    excludedNamespaces: ["tenant1"]
+  parameters:
+    ops: ["CREATE","UPDATE"]
+    namespaces: ["tenant1"]
+    tolerations:
+    - effect: NoSchedule
+      key: tenant
+      operator: Equal
+      value: tenant1
+    errMsg: "INVALID_NS_TOLERATIONS"

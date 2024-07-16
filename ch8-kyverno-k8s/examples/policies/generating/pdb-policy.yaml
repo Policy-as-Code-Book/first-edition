@@ -1,0 +1,29 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: create-default-pdb
+spec:
+  generateExisting: true
+  rules:
+  - name: create-default-pdb
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment
+    exclude:
+      resources:
+        namespaces:
+        - local-path-storage
+    generate:
+      apiVersion: policy/v1
+      kind: PodDisruptionBudget
+      name: "{{request.object.metadata.name}}-default-pdb"
+      namespace: "{{request.object.metadata.namespace}}"
+      synchronize: true
+      data:
+        spec:
+          minAvailable: 1
+          selector:
+            matchLabels:
+              "{{request.object.metadata.labels}}"

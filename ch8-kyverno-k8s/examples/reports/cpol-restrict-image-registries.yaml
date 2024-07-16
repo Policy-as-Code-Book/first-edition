@@ -1,0 +1,37 @@
+apiVersion: wgpolicyk8s.io/v1alpha2
+kind: PolicyReport
+metadata:
+  creationTimestamp: "2023-03-15T00:29:45Z"
+  generation: 2
+  labels:
+    app.kubernetes.io/managed-by: kyverno
+    cpol.kyverno.io/restrict-image-registries: "9075"
+  name: cpol-restrict-image-registries
+  namespace: policy-test
+  resourceVersion: "9283"
+  uid: f958b43a-4676-4b2c-b969-e9a0f5ee628f
+results:
+- category: Best Practices, EKS Best Practices
+  message: 'validation failure: The "k8s.gcr.io" image registry is deprecated. "registry.k8s.io"
+    should now be used.'
+  policy: restrict-image-registries
+  resources:
+  - apiVersion: v1
+    kind: Pod
+    name: test-pod
+    namespace: policy-test
+    uid: c496737f-e844-4996-b8c6-9c50816449e4
+  result: fail
+  rule: detect-deprecated-registry
+  scored: true
+  severity: high
+  source: kyverno
+  timestamp:
+    nanos: 0
+    seconds: 1678840185
+summary:
+  error: 0
+  fail: 1
+  pass: 0
+  skip: 0
+  warn: 0

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+  namespace: policy-test
+  annotations:
+    dont-create-me: stop
+  labels:
+    app: test
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+spec:
+  containers:
+    - name: test-pod
+      image: registry.k8s.io/pause:3.1
+      imagePullPolicy: Always
+      securityContext:
+        allowPrivilegeEscalation: false  
+        runAsUser: 1000  
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        capabilities:
+          drop: ["ALL"]  
+        seccompProfile:
+          type: "RuntimeDefault"
+

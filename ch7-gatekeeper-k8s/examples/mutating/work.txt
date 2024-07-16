@@ -1,0 +1,11 @@
+
+kubectl -n policy-test get pods test-pod -o=jsonpath='{.metadata.labels}'
+{"app":"test","billing":"lob-cc","env":"dev","owner":"jimmy"}
+
+k apply -f ../mutating/0-add-pod-labels.yaml
+Error from server: error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"mutations.gatekeeper.sh/v1\",\"kind\":\"Assign\",\"metadata\":{\"annotations\":{},\"name\":\"add-seccomp\"},\"spec\":{\"applyTo\":[{\"groups\":[\"\"],\"kinds\":[\"Pod\"],\"versions\":[\"v1\"]}],\"location\":\"spec.containers[name: test].securityContext.seccompProfile.type\",\"match\":{\"namespaces\":[\"policy*\"]},\"parameters\":{\"assign\":{\"value\":\"RuntimeDefault\"},\"pathTests\":[{\"condition\":\"MustNotExist\",\"subPath\":\"spec.containers[name: *].securityContext.seccompProfile\"}]}}}\n"}},"spec":{"location":"spec.containers[name: test].securityContext.seccompProfile.type","parameters":{"pathTests":[{"condition":"MustNotExist","subPath":"spec.containers[name: *].securityContext.seccompProfile"}]}}}
+to:
+Resource: "mutations.gatekeeper.sh/v1, Resource=assign", GroupVersionKind: "mutations.gatekeeper.sh/v1, Kind=Assign"
+Name: "add-seccomp", Namespace: ""
+for: "../mutating/0-add-pod-labels.yaml": error when patching "../mutating/0-add-pod-labels.yaml": admission webhook "validation.gatekeeper.sh" denied the request: all subpaths must be a prefix of the `location` value of the mutation: subpath "spec.containers[name: *].securityContext.seccompProfile" is not a prefix of location "spec.containers[name: test].securityContext.seccompProfile.type"

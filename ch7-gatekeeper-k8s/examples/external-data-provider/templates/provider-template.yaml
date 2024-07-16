@@ -1,0 +1,14 @@
+#apiVersion: externaldata.gatekeeper.sh/v1alpha1
+apiVersion: externaldata.gatekeeper.sh/v1beta1
+kind: Provider
+metadata:
+  name: answers-provider
+  labels:
+    app: answers
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+spec:
+  url: https://answers.answers.svc/provide # URL to the external data source (e.g., https://my-provider.my-namespace:8090/validate)
+  timeout: 1 # timeout value in seconds (e.g., 1). this is the timeout on the Provider custom resource, not the provider implementation.
+  caBundle: __CA_BUNDLE_VALUE__ # base64 encoded CA certificate.

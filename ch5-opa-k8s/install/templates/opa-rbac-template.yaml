@@ -1,0 +1,79 @@
+# OPA Version v0.8.1
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: opa
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: opa
+  namespace: opa
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: opa
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+rules:
+  - apiGroups: [""]
+    resources:
+      - namespaces
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups: ["networking.k8s.io"]
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups: [""]
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - patch
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: opa
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: opa
+subjects:
+- kind: ServiceAccount
+  name: opa
+  namespace: opa

@@ -1,0 +1,14 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: opa-data-projects
+  namespace: opa
+  labels:
+    app: opa
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+    openpolicyagent.org/data: opa
+data:
+  main: | 
+    {"projects":[{"lead":"jimmy","method":"GET","project":"book"}]}

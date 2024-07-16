@@ -1,0 +1,37 @@
+keys:
+  project-bundle-key:
+    key: |
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx25XLhrMvWjbtBeGq2oF
+      C3hKOg7ITTzoe/vSdepxNIFCv8D1R4/zpno6QNvkb/dL3e5ji33Nstkcb+ENxmX+
+      KZ5cvL0TBt2KcsayvrXcG4DV2B0oX5sDEd5I7m5ckBlii6Nq+HZzQNkpH79uPjIf
+      QGu4GH55L/qbkcqhsvz5J2SZBh0lFelcj6R7CqTMMv0CW2n00a7G4xqVzd+WydRd
+      dDvc1e0I52jkGcusoPecMLjJxV/Uvn5QNbgqDDXlHCXN0mZeaPiQtdPAzXEYr88L
+      bs+WxU+vhsjxQjtnFKGe+rjWA8oOYrPREVIvx4KGWhaQIrXo65jNI1PKuhUZ/CSK
+      HwIDAQAB
+      -----END PUBLIC KEY-----
+
+services:
+  - name: opa-bundle-api
+    url: https://10.0.2.2:8443/v1/bundles
+    allow_insecure_tls: true
+    credentials:
+      bearer:
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJvcGEtYnVuZGxlLWFwaSIsIm5hbSI6IkppbW15IFJheSIsImlhdCI6MTUxNjIzOTAyMn0.YwOR3SLVbrCz-GHQmNwRZm45T6FdNU5cXZlp4kQ-AKM"
+
+bundles:
+  project:
+    service: opa-bundle-api
+    resource: signed-main.tar.gz
+    # persist: true
+    polling:
+      min_delay_seconds: 10
+      max_delay_seconds: 20
+    signing:
+      keyid: project-bundle-key
+      # scope: read
+
+# keys:
+#   jwt_signing_key:
+#     algorithm: ES512
+#     private_key: ${BUNDLE_SERVICE_SIGNING_KEY}

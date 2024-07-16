@@ -1,0 +1,44 @@
+import "tfplan/v2" as tfplan
+import "types"
+import "common-functions" as cf
+
+param p_required_labels default ["billing","env","owner"]
+
+print("Parameters:\np_required_labels =",p_required_labels,"\n")
+
+# Validate google storage bucket labels
+invalid_buckets = func() {
+    bads = []
+	
+	buckets = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_storage_bucket" and
+        resource_changes.mode is "managed" and
+        (resource_changes.change.actions contains "create" or
+            resource_changes.change.actions contains "update") and
+        resource_changes.provider_name is "registry.terraform.io/hashicorp/google"
+	}
+
+    print("Found",length(buckets),"bucket(s)")
+
+    for buckets as address, b {
+		print("Bucket:",address,"labels =",b.change.after.labels)
+        # print("after.labels",b.change.after.labels)
+        # print("after_unknown.labels",b.change.after_unknown.labels)
+        # print("Labels keys:",keys(b.change.after.labels))
+        if (types.type_of(b.change.after.labels) is "undefined") or 
+        (not cf.list_in_list(p_required_labels,keys(b.change.after.labels))) {
+            # print("Labels:",b.change.after.labels)
+            append(bads, address)
+        }
+    }
+
+    # print("Bads count:",length(bads))
+
+    return bads
+}
+
+main = rule {
+	length(invalid_buckets()) is 0 
+}
+
+

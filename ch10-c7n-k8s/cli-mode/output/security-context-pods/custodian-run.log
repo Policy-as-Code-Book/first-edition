@@ -1,0 +1,302 @@
+2023-07-03 21:45:56,433 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-03 21:45:56,436 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:45:56,497 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 1 to 1 listitemresourcemanager
+2023-07-03 21:45:56,497 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-03 21:45:56,497 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.06
+2023-07-03 21:45:56,501 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:45:56,516 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-03 21:45:56,516 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-03 21:47:32,428 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-03 21:47:32,431 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:47:32,517 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 1 to 1 listitemresourcemanager
+2023-07-03 21:47:32,518 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-03 21:47:32,518 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.09
+2023-07-03 21:47:32,522 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:47:32,539 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-03 21:47:32,539 - custodian.output - DEBUG - metric:PolicyException Count:1 policy:security-context-pods restype:k8s.pod
+2023-07-03 21:47:32,539 - custodian.output - ERROR - Error while executing policy
+Traceback (most recent call last):
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n/policy.py", line 364, in run
+    results = a.process(resources)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n_kube/actions/core.py", line 43, in process
+    self.process_resource_set(client, resource_set)
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n_kube/actions/core.py", line 101, in process_resource_set
+    self.patch_resources(client, resources, **patch_args)
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n_kube/actions/core.py", line 74, in patch_resources
+    op(**patch_args)
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api/core_v1_api.py", line 19662, in patch_namespaced_pod
+    return self.patch_namespaced_pod_with_http_info(name, namespace, body, **kwargs)  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api/core_v1_api.py", line 19777, in patch_namespaced_pod_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api_client.py", line 348, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api_client.py", line 180, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api_client.py", line 407, in request
+    return self.rest_client.PATCH(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/rest.py", line 296, in PATCH
+    return self.request("PATCH", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/rest.py", line 235, in request
+    raise ApiException(http_resp=r)
+kubernetes.client.exceptions.ApiException: (422)
+Reason: Unprocessable Entity
+HTTP response headers: HTTPHeaderDict({'Audit-Id': '45785bec-0383-41c4-9f91-e85153b19cb8', 'Cache-Control': 'no-cache, private', 'Content-Type': 'application/json', 'X-Kubernetes-Pf-Flowschema-Uid': '706449b4-4225-4669-afc1-7b6045e093b3', 'X-Kubernetes-Pf-Prioritylevel-Uid': 'aa33f9b2-fe0c-4868-9e1c-c9ae0e9caf8f', 'Date': 'Tue, 04 Jul 2023 01:47:32 GMT', 'Content-Length': '490'})
+HTTP response body: {"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":" \"\" is invalid: patch: Invalid value: \"map[spec:map[containers:map[security_context:map[allow_privilege_escalation:false]]]]\": cannot restore slice from map","reason":"Invalid","details":{"causes":[{"reason":"FieldValueInvalid","message":"Invalid value: \"map[spec:map[containers:map[security_context:map[allow_privilege_escalation:false]]]]\": cannot restore slice from map","field":"patch"}]},"code":422}
+
+
+2023-07-03 21:47:58,799 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-03 21:47:58,802 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:47:58,861 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 1 to 1 listitemresourcemanager
+2023-07-03 21:47:58,861 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-03 21:47:58,861 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.06
+2023-07-03 21:47:58,865 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:47:58,878 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-03 21:47:58,878 - custodian.output - DEBUG - metric:PolicyException Count:1 policy:security-context-pods restype:k8s.pod
+2023-07-03 21:47:58,878 - custodian.output - ERROR - Error while executing policy
+Traceback (most recent call last):
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n/policy.py", line 364, in run
+    results = a.process(resources)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n_kube/actions/core.py", line 43, in process
+    self.process_resource_set(client, resource_set)
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n_kube/actions/core.py", line 101, in process_resource_set
+    self.patch_resources(client, resources, **patch_args)
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n_kube/actions/core.py", line 74, in patch_resources
+    op(**patch_args)
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api/core_v1_api.py", line 19662, in patch_namespaced_pod
+    return self.patch_namespaced_pod_with_http_info(name, namespace, body, **kwargs)  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api/core_v1_api.py", line 19777, in patch_namespaced_pod_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api_client.py", line 348, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api_client.py", line 180, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api_client.py", line 407, in request
+    return self.rest_client.PATCH(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/rest.py", line 296, in PATCH
+    return self.request("PATCH", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/rest.py", line 235, in request
+    raise ApiException(http_resp=r)
+kubernetes.client.exceptions.ApiException: (422)
+Reason: Unprocessable Entity
+HTTP response headers: HTTPHeaderDict({'Audit-Id': 'd1327b6c-c849-421b-ae19-7ed8242657b2', 'Cache-Control': 'no-cache, private', 'Content-Type': 'application/json', 'X-Kubernetes-Pf-Flowschema-Uid': '706449b4-4225-4669-afc1-7b6045e093b3', 'X-Kubernetes-Pf-Prioritylevel-Uid': 'aa33f9b2-fe0c-4868-9e1c-c9ae0e9caf8f', 'Date': 'Tue, 04 Jul 2023 01:47:58 GMT', 'Content-Length': '490'})
+HTTP response body: {"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":" \"\" is invalid: patch: Invalid value: \"map[spec:map[containers:map[security_context:map[allow_privilege_escalation:false]]]]\": cannot restore slice from map","reason":"Invalid","details":{"causes":[{"reason":"FieldValueInvalid","message":"Invalid value: \"map[spec:map[containers:map[security_context:map[allow_privilege_escalation:false]]]]\": cannot restore slice from map","field":"patch"}]},"code":422}
+
+
+2023-07-03 21:50:40,073 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-03 21:50:40,075 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:50:40,128 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 1 to 1 listitemresourcemanager
+2023-07-03 21:50:40,128 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-03 21:50:40,128 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.06
+2023-07-03 21:50:40,132 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:50:40,148 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-03 21:50:40,149 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-03 21:58:01,942 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-03 21:58:01,945 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:58:02,010 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 1 to 1 listitemresourcemanager
+2023-07-03 21:58:02,011 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-03 21:58:02,011 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.07
+2023-07-03 21:58:02,015 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-03 21:58:02,034 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-03 21:58:02,034 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-04 22:28:30,274 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-04 22:28:30,277 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-04 22:28:30,338 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 1 to 0 listitemresourcemanager
+2023-07-04 22:28:30,338 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 1 to 1 listitemresourcemanager
+2023-07-04 22:28:30,338 - custodian.resources.pod - DEBUG - Filtered from 9 to 1 pod
+2023-07-04 22:28:30,338 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.06
+2023-07-04 22:28:30,342 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-04 22:28:30,363 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-04 22:28:30,364 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-04 22:31:18,981 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-04 22:31:18,994 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-04 22:31:19,043 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-04 22:31:19,044 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-04 22:31:19,044 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-04 22:31:19,048 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-04 22:31:19,070 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-04 22:31:19,070 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 08:38:35,884 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 08:38:35,887 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:38:35,930 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 08:38:35,930 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 08:38:35,930 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 08:38:35,934 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:38:35,951 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-05 08:38:35,952 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 08:40:02,914 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 08:40:02,917 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:40:02,962 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 08:40:02,962 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 08:40:02,963 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 08:40:02,967 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:40:02,987 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-05 08:40:02,988 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 08:45:04,751 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 08:45:04,754 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:45:04,801 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 08:45:04,801 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 08:45:04,801 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 08:45:04,805 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:45:04,829 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.03
+2023-07-05 08:45:04,830 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 08:48:15,519 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 08:48:15,522 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:48:15,565 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 08:48:15,565 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 08:48:15,565 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 08:48:15,570 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:48:15,596 - custodian.policy - INFO - policy:security-context-pods action:deleteresource resources:1 execution_time:0.03
+2023-07-05 08:48:15,597 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 08:58:55,232 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 08:58:55,236 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:58:55,283 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 08:58:55,284 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 08:58:55,284 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 08:58:55,288 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 08:58:55,306 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-05 08:58:55,306 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:14:15,595 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:14:15,597 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:14:15,642 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:14:15,642 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:14:15,642 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 09:14:15,647 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:14:15,672 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.03
+2023-07-05 09:14:15,673 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:37:07,464 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:37:07,467 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:37:07,513 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:37:07,513 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:37:07,513 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 09:37:07,519 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:37:07,540 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.03
+2023-07-05 09:37:07,541 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:40:44,841 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:40:44,844 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:40:44,887 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:40:44,887 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:40:44,888 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 09:40:44,892 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:40:44,908 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:40:44,908 - custodian.output - DEBUG - metric:PolicyException Count:1 policy:security-context-pods restype:k8s.pod
+2023-07-05 09:40:44,908 - custodian.output - ERROR - Error while executing policy
+Traceback (most recent call last):
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n/policy.py", line 364, in run
+    results = a.process(resources)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n_kube/actions/core.py", line 43, in process
+    self.process_resource_set(client, resource_set)
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n_kube/actions/core.py", line 101, in process_resource_set
+    self.patch_resources(client, resources, **patch_args)
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/c7n_kube/actions/core.py", line 74, in patch_resources
+    op(**patch_args)
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api/core_v1_api.py", line 19662, in patch_namespaced_pod
+    return self.patch_namespaced_pod_with_http_info(name, namespace, body, **kwargs)  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api/core_v1_api.py", line 19777, in patch_namespaced_pod_with_http_info
+    return self.api_client.call_api(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api_client.py", line 348, in call_api
+    return self.__call_api(resource_path, method,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api_client.py", line 180, in __call_api
+    response_data = self.request(
+                    ^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/api_client.py", line 407, in request
+    return self.rest_client.PATCH(url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/rest.py", line 296, in PATCH
+    return self.request("PATCH", url,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jimmy/code/github/pac-book/work/ch11-c7n-k8s/custodian/lib/python3.11/site-packages/kubernetes/client/rest.py", line 235, in request
+    raise ApiException(http_resp=r)
+kubernetes.client.exceptions.ApiException: (422)
+Reason: Unprocessable Entity
+HTTP response headers: HTTPHeaderDict({'Audit-Id': '1db2446d-03aa-4b71-a9a8-07f9dbf0d77a', 'Cache-Control': 'no-cache, private', 'Content-Type': 'application/json', 'X-Kubernetes-Pf-Flowschema-Uid': '706449b4-4225-4669-afc1-7b6045e093b3', 'X-Kubernetes-Pf-Prioritylevel-Uid': 'aa33f9b2-fe0c-4868-9e1c-c9ae0e9caf8f', 'Date': 'Wed, 05 Jul 2023 13:40:44 GMT', 'Content-Length': '1886'})
+HTTP response body: {"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":"Pod \"test-pod-1\" is invalid: metadata.labels: Invalid value: \"compliance-issue'\": name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')","reason":"Invalid","details":{"name":"test-pod-1","kind":"Pod","causes":[{"reason":"FieldValueInvalid","message":"Invalid value: \"compliance-issue'\": name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')","field":"metadata.labels"},{"reason":"FieldValueInvalid","message":"Invalid value: \"compliance-issue'\": name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')","field":"metadata.labels"},{"reason":"FieldValueInvalid","message":"Invalid value: \"compliance-issue'\": name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')","field":"metadata.labels"},{"reason":"FieldValueInvalid","message":"Invalid value: \"compliance-issue'\": name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')","field":"metadata.labels"}]},"code":422}
+
+
+2023-07-05 09:41:34,127 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:41:34,130 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:41:34,172 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:41:34,172 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:41:34,172 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.04
+2023-07-05 09:41:34,177 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:41:34,199 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.03
+2023-07-05 09:41:34,199 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:43:47,822 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:43:47,825 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:43:47,873 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:43:47,873 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:43:47,873 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 09:43:47,878 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:43:47,903 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.03
+2023-07-05 09:43:47,904 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:45:24,717 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:45:24,720 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:45:24,761 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:45:24,761 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:45:24,761 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.04
+2023-07-05 09:45:24,765 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:45:24,792 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.03
+2023-07-05 09:45:24,793 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:46:21,190 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:46:21,192 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:46:21,239 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:46:21,239 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:46:21,239 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 09:46:21,243 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:46:21,267 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.03
+2023-07-05 09:46:21,268 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:49:21,167 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:49:21,170 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:49:21,212 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:49:21,212 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:49:21,212 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 09:49:21,217 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:49:21,240 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.03
+2023-07-05 09:49:21,240 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:50:19,421 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:50:19,425 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:50:19,480 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:50:19,480 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:50:19,481 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.06
+2023-07-05 09:50:19,486 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:50:19,512 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.03
+2023-07-05 09:50:19,513 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:58:02,098 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:58:02,100 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:58:02,150 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 1 listitemresourcemanager
+2023-07-05 09:58:02,150 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 09:58:02,150 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 09:58:02,154 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:58:02,176 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-05 09:58:02,176 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 09:59:33,438 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 09:59:33,441 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 09:59:33,486 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 0 listitemresourcemanager
+2023-07-05 09:59:33,486 - custodian.resources.pod - DEBUG - Filtered from 8 to 0 pod
+2023-07-05 09:59:33,487 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:0 time:0.05
+2023-07-05 09:59:33,488 - custodian.output - DEBUG - metric:ResourceCount Count:0 policy:security-context-pods restype:k8s.pod scope:policy
+2023-07-05 10:19:45,685 - custodian.policy - DEBUG - Running policy:security-context-pods resource:k8s.pod region:default c7n:0.9.28
+2023-07-05 10:19:45,688 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 10:19:45,732 - custodian.resources.listitemresourcemanager - DEBUG - Filtered from 2 to 2 listitemresourcemanager
+2023-07-05 10:19:45,733 - custodian.resources.pod - DEBUG - Filtered from 8 to 1 pod
+2023-07-05 10:19:45,733 - custodian.policy - INFO - policy:security-context-pods resource:k8s.pod region: count:1 time:0.05
+2023-07-05 10:19:45,736 - custodian.k8s.client - DEBUG - connecting to https://127.0.0.1:64679
+2023-07-05 10:19:45,758 - custodian.policy - INFO - policy:security-context-pods action:patchresource resources:1 execution_time:0.02
+2023-07-05 10:19:45,759 - custodian.output - DEBUG - metric:ResourceCount Count:1 policy:security-context-pods restype:k8s.pod scope:policy

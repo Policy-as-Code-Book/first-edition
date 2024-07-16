@@ -1,0 +1,42 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: label-pods
+  namespace: opa
+  labels:
+    app: opa
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+    openpolicyagent.org/policy: rego
+data:
+  main: |
+    package system
+
+    # import data.kubernetes.admission
+    import future.keywords.in
+
+    main = {
+        "apiVersion": "admission.k8s.io/v1",
+        "kind": "AdmissionReview",
+        "response": response,
+    }
+
+    default uid = ""
+    uid = input.request.uid
+
+    response = {
+        "allowed": true,
+        "uid": uid,
+    }
+
+    # response = {
+    #     "allowed": true,
+    #     "uid": uid,
+    #     "patchType": "JSONPatch",
+    #     "patch": base64url.encode(json.marshal([{"op": "add", "path": "/metadata/annotations/foo", "value": "bar"}])),
+    # } {
+    #     input.request.operation in ["CREATE", "UPDATE"]
+    #     input.request.object.kind.kind in ["Pod"]
+    # }
+

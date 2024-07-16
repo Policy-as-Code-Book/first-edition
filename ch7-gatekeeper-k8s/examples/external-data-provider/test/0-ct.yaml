@@ -1,0 +1,40 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sanswerverification
+  annotations:
+    description: >-
+      Calls external data provider answers app.
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sAnswerVerification
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sanswerverification
+
+        violation[{"msg": msg}] {
+          input.review.kind.kind == "Pod"
+          # build a list of keys containing images
+          images := [img | img = input.review.object.spec.template.spec.containers[_].image]
+
+          # send external data request
+          response := external_data({"provider": "answers-provider", "keys": images})
+
+          response_with_error(response)
+
+          msg := sprintf("invalid response: %v", [response])
+        }
+
+        response_with_error(response) {
+          count(response.errors) > 0
+          errs := response.errors[_]
+          contains(errs[1], "DENIED")
+        }
+
+        response_with_error(response) {
+          count(response.system_error) > 0
+        }
+  

@@ -1,0 +1,18 @@
+discovery:
+  name: discovery
+  prefix: /systems/<SYSTEM_ID>
+  service: styra
+labels:
+  system-id: <SYSTEM_ID>
+  system-type: custom
+services:
+- credentials:
+    bearer:
+      token: <TOKEN>
+  name: styra
+  url: <STYRA_URL>
+- credentials:
+    bearer:
+      token: <TOKEN>
+  name: styra-bundles
+  url: <STYRA_URL>/bundles

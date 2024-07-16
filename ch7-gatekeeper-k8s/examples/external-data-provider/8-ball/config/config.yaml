@@ -1,0 +1,48 @@
+answers:
+    - answer: It is certain.
+      code: "Y"
+    - answer: It is decidedly so.
+      code: "Y"
+    - answer: Without a doubt.
+      code: "Y"
+    - answer: Yes definitely.
+      code: "Y"
+    - answer: You may rely on it.
+      code: "Y"
+    - answer: As I see it, yes.
+      code: "Y"
+    - answer: Most likely.
+      code: "Y"
+    - answer: Outlook good.
+      code: "Y"
+    - answer: Yes.
+      code: "Y"
+    - answer: Signs point to yes.
+      code: "Y"
+    - answer: Reply hazy, try again.
+      code: M
+    - answer: Ask again later.
+      code: M
+    - answer: Better not tell you now.
+      code: M
+    - answer: Cannot predict now.
+      code: M
+    - answer: Concentrate and ask again.
+      code: M
+    - answer: Don't count on it.
+      code: "N"
+    - answer: My reply is no.
+      code: "N"
+    - answer: My sources say no.
+      code: "N"
+    - answer: Outlook not so good.
+      code: "N"
+    - answer: Very doubtful.
+      code: "N"
+network:
+    serverAddress: ""
+    serverPort: "8080"
+    tls:
+        enabled: false
+        cert: /certs/tls.crt
+        key: /certs/tls.key

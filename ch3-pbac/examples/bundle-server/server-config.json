@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "name": "opa-bundle-server",
+    "tags": {
+      "owner": "jimmy",
+      "env": "dev",
+      "billing": "lob-cc"
+    }
+  },
+  "network": {
+    "server-address": "10.0.2.2",
+    "server-port": "8443",
+    "tls": {
+      "enable": true,
+      "cert": "tls/localhost.crt",
+      "key": "tls/localhost.key"
+    },
+    "uris": {
+      "health": "/healthz",
+      "info": "/info",
+      "api": "/v1/api"
+    }
+  },
+  "init": {
+    "allow-dir-list": false,
+    "enable-request-logging": true,
+    "enable-etag": true,
+    "log-level": "info",
+    "log-file": "server.log"
+  },
+  "authz": {
+    "enable": true,
+    "secrets": "authz/authz.json"
+  },
+  "bundles": {
+    "enable":true,
+    "load-registry": false,
+    "persist-registry": true,
+    "purge-bundles": true,
+    "bundle-uri": "/v1/bundles",
+    "bundle-out-dir": "bundles",
+    "bundles": [
+      {
+        "build": true,
+        "bundle-name": "main",
+        "bundle-file-name": "signed-main",
+        "bundle-ts": false,
+        "bundle-in-dir": "bundle-material",
+        "bundle-out-dir": "bundles",
+        "bundle-revision": "v0.1.0",
+        "bundle-roots": [
+          "pacbook","somewhere","somplace"
+        ],
+        "bundle-ignore-files":[".DS_Store",".manifest"],
+        "bundle-signing": {
+          "enable": true,
+          "signing-alg": "RS256",
+          "signing-key": "keys/key.pem",
+          "signing-key-id": "main-key"
+        }
+      },
+      {
+        "build": false,
+        "bundle-name": "jimmy",
+        "bundle-file-name": "signed-jimmy",
+        "bundle-ts": true,
+        "bundle-in-dir": "bundle-material",
+        "bundle-out-dir": "bundles",
+        "bundle-revision": "v0.1.0",
+        "bundle-roots": [
+          "jimmy"
+        ],
+        "bundle-ignore-files":[".DS_Store",".manifest"],
+        "bundle-signing": {
+          "enable": true,
+          "signing-alg": "RS256",
+          "signing-key": "keys/key.pem",
+          "signing-key-id": "main-key"
+        }
+      },
+      {
+        "build": false,
+        "bundle-name": "ray",
+        "bundle-file-name": "unsigned-ray",
+        "bundle-ts": true,
+        "bundle-in-dir": "bundle-material",
+        "bundle-out-dir": "bundles",
+        "bundle-revision": "v0.1.0",
+        "bundle-roots": [
+          "ray"
+        ],
+        "bundle-ignore-files":[".DS_Store",".manifest"],
+        "bundle-signing": {
+          "enable": false,
+          "signing-alg": "RS256",
+          "signing-key": "keys/key.pem",
+          "signing-key-id": "main-key"
+        }
+      }
+    ]
+  }
+}

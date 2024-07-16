@@ -1,0 +1,177 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+  name: kube-mgmt
+  namespace: opa
+---
+# Grant OPA/kube-mgmt read-only access to resources. This lets kube-mgmt
+# replicate resources into OPA so they can be used in policies.
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: opa-kube-mgmt-viewer
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: kube-mgmt
+  namespace: opa
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: opa
+  name: opa-configmap-ingester
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "patch", "update", "watch"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: opa
+  name: opa-configmap-ingester
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+roleRef:
+  kind: Role
+  name: opa-configmap-ingester
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: kube-mgmt
+  namespace: opa
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: opa
+  namespace: opa
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+spec:
+  selector:
+    app: opa
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 8443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+  namespace: opa
+  name: opa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opa
+  template:
+    metadata:
+      labels:
+        app: opa
+      name: opa
+    spec:
+      serviceAccount: kube-mgmt
+      serviceAccountName: kube-mgmt
+      containers:
+        # WARNING: OPA is NOT running with an authorization policy configured. This
+        # means that clients can read and write policies in OPA. If you are
+        # deploying OPA in an insecure environment, be sure to configure
+        # authentication and authorization on the daemon. See the Security page for
+        # details: https://www.openpolicyagent.org/docs/security.html.
+        - name: opa
+          # image: openpolicyagent/opa:0.47.3-rootless
+          image: openpolicyagent/opa:0.62.0-static
+          securityContext:  
+            allowPrivilegeEscalation: false  
+            runAsUser: 1000  
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop: ["ALL"]  
+            seccompProfile:
+              type: "RuntimeDefault"
+          args:
+            - "run"
+            - "--server"
+            - "--tls-cert-file=/certs/tls.crt"
+            - "--tls-private-key-file=/certs/tls.key"
+            - "--addr=https://0.0.0.0:8443"
+            - "--addr=http://127.0.0.1:8181"
+            # - "--set=services.default.url=http://host.minikube.internal:8888"
+            # - "--set=bundles.default.resource=bundle.tar.gz"
+            - "--log-format=json" #-pretty
+            - "--set=status.console=true"
+            - "--set=decision_logs.console=true"
+            # - "--set=default_decision=/library/kubernetes/admission/mutating/main"
+          volumeMounts:
+            - readOnly: true
+              mountPath: /certs
+              name: opa-server
+          readinessProbe:
+            httpGet:
+              path: /health #?plugins&bundle
+              scheme: HTTPS
+              port: 8443
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              scheme: HTTPS
+              port: 8443
+            initialDelaySeconds: 3
+            periodSeconds: 10
+        - name: kube-mgmt
+          # image: openpolicyagent/kube-mgmt:7.3.0
+          image: openpolicyagent/kube-mgmt:8.5.5
+          securityContext:  
+            allowPrivilegeEscalation: false  
+            runAsUser: 1000  
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop: ["ALL"]  
+            seccompProfile:
+              type: "RuntimeDefault"
+          args:
+            - "--replicate-cluster=v1/namespaces"
+            - "--replicate=networking.k8s.io/v1/ingresses"
+            - "--namespaces=opa"
+            # - "--replicate=apps/v1/deployments"
+      volumes:
+        - name: opa-server
+          secret:
+            secretName: opa-server

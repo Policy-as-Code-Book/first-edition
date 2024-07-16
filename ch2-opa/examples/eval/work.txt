@@ -1,0 +1,2 @@
+opa eval -i input.json -d policy.rego -d data.json "data.example.hello"
+

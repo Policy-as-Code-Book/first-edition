@@ -1,0 +1,9 @@
+{
+    "projects": [
+        {
+            "method": "GET",
+            "project": "book",
+            "author": "jimmy"
+        }
+    ]
+}

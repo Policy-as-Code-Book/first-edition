@@ -1,0 +1,1 @@
+minikube start -p styra-das-free

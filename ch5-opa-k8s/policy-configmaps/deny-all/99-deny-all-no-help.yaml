@@ -1,0 +1,22 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: deny-all-pods
+  namespace: opa
+  labels:
+    app: opa
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+    openpolicyagent.org/policy: rego
+data:
+  main: |
+    package kubernetes.admission
+
+    import future.keywords.in
+
+    deny[msg] {
+      input.request.kind.kind == "Pod"
+      input.request.operation in ["CREATE", "DELETE", "UPDATE"]
+      msg = sprintf("Request object: %q", [input.request.object])
+    }

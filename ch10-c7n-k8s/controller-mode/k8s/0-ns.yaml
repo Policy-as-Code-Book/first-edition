@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: c7n-kube
+  labels:
+    # pod-security.kubernetes.io/audit: restricted
+    # pod-security.kubernetes.io/enforce: restricted
+    # pod-security.kubernetes.io/warn: restricted
+    app: c7n-kube
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+

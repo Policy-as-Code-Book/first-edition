@@ -1,0 +1,294 @@
+[
+  {
+    "location": {
+      "file": "helloworld_test.rego",
+      "row": 5,
+      "col": 1
+    },
+    "package": "data.examples.ch2",
+    "name": "test_hello_world",
+    "duration": 274250
+  },
+  {
+    "location": {
+      "file": "helloworld_test.rego",
+      "row": 9,
+      "col": 1
+    },
+    "package": "data.examples.ch2",
+    "name": "test_hello_goodbye",
+    "duration": 134417,
+    "trace": [
+      {
+        "Op": "Enter",
+        "Node": [
+          {
+            "terms": [
+              {
+                "type": "ref",
+                "value": [
+                  {
+                    "type": "var",
+                    "value": "eq"
+                  }
+                ]
+              },
+              {
+                "type": "ref",
+                "value": [
+                  {
+                    "type": "var",
+                    "value": "data"
+                  },
+                  {
+                    "type": "string",
+                    "value": "examples"
+                  },
+                  {
+                    "type": "string",
+                    "value": "ch2"
+                  },
+                  {
+                    "type": "string",
+                    "value": "test_hello_goodbye"
+                  }
+                ]
+              },
+              {
+                "type": "var",
+                "value": "$term1"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "Location": {
+          "file": "",
+          "row": 1,
+          "col": 1
+        },
+        "QueryID": 0,
+        "ParentID": 0,
+        "Locals": null,
+        "LocalMetadata": {},
+        "Message": "",
+        "Ref": null
+      },
+      {
+        "Op": "Enter",
+        "Node": {
+          "head": {
+            "name": "test_hello_goodbye",
+            "value": {
+              "type": "boolean",
+              "value": true
+            }
+          },
+          "body": [
+            {
+              "with": [
+                {
+                  "target": {
+                    "type": "ref",
+                    "value": [
+                      {
+                        "type": "var",
+                        "value": "input"
+                      }
+                    ]
+                  },
+                  "value": {
+                    "type": "object",
+                    "value": [
+                      [
+                        {
+                          "type": "string",
+                          "value": "message"
+                        },
+                        {
+                          "type": "string",
+                          "value": "planet"
+                        }
+                      ]
+                    ]
+                  }
+                }
+              ],
+              "terms": {
+                "type": "ref",
+                "value": [
+                  {
+                    "type": "var",
+                    "value": "data"
+                  },
+                  {
+                    "type": "string",
+                    "value": "examples"
+                  },
+                  {
+                    "type": "string",
+                    "value": "ch2"
+                  },
+                  {
+                    "type": "string",
+                    "value": "hello"
+                  }
+                ]
+              },
+              "index": 0
+            }
+          ]
+        },
+        "Location": {
+          "file": "helloworld_test.rego",
+          "row": 9,
+          "col": 1
+        },
+        "QueryID": 1,
+        "ParentID": 0,
+        "Locals": null,
+        "LocalMetadata": {},
+        "Message": "",
+        "Ref": null
+      },
+      {
+        "Op": "Enter",
+        "Node": {
+          "head": {
+            "name": "hello",
+            "value": {
+              "type": "string",
+              "value": "world"
+            }
+          },
+          "body": [
+            {
+              "terms": [
+                {
+                  "type": "ref",
+                  "value": [
+                    {
+                      "type": "var",
+                      "value": "eq"
+                    }
+                  ]
+                },
+                {
+                  "type": "var",
+                  "value": "__local0__"
+                },
+                {
+                  "type": "ref",
+                  "value": [
+                    {
+                      "type": "var",
+                      "value": "input"
+                    },
+                    {
+                      "type": "string",
+                      "value": "message"
+                    }
+                  ]
+                }
+              ],
+              "index": 0
+            },
+            {
+              "terms": [
+                {
+                  "type": "ref",
+                  "value": [
+                    {
+                      "type": "var",
+                      "value": "eq"
+                    }
+                  ]
+                },
+                {
+                  "type": "var",
+                  "value": "__local0__"
+                },
+                {
+                  "type": "string",
+                  "value": "world"
+                }
+              ],
+              "index": 1
+            }
+          ]
+        },
+        "Location": {
+          "file": "helloworld.rego",
+          "row": 5,
+          "col": 1
+        },
+        "QueryID": 2,
+        "ParentID": 1,
+        "Locals": null,
+        "LocalMetadata": {
+          "__local0__": {
+            "name": "msg",
+            "location": {
+              "file": "helloworld.rego",
+              "row": 6,
+              "col": 2
+            }
+          }
+        },
+        "Message": "",
+        "Ref": null
+      },
+      {
+        "Op": "Fail",
+        "Node": {
+          "terms": [
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "eq"
+                }
+              ]
+            },
+            {
+              "type": "var",
+              "value": "__local0__"
+            },
+            {
+              "type": "string",
+              "value": "world"
+            }
+          ],
+          "index": 1
+        },
+        "Location": {
+          "file": "helloworld.rego",
+          "row": 7,
+          "col": 2
+        },
+        "QueryID": 2,
+        "ParentID": 1,
+        "Locals": [
+          {
+            "name": "__local0__",
+            "type": "string",
+            "value": "planet"
+          }
+        ],
+        "LocalMetadata": {
+          "__local0__": {
+            "name": "msg",
+            "location": {
+              "file": "helloworld.rego",
+              "row": 6,
+              "col": 2
+            }
+          }
+        },
+        "Message": "",
+        "Ref": null
+      }
+    ]
+  }
+]

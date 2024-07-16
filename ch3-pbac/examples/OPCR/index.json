@@ -1,0 +1,16 @@
+{
+    "schemaVersion": 2,
+    "manifests": [
+        {
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+            "digest": "sha256:844193c030c1985933ad0e48b7c525fd3c6d18a4f3bfbedf4895f063162de4c2",
+            "size": 350,
+            "annotations": {
+                "org.opencontainers.image.created": "2022-11-19T07:31:01Z",
+                "org.opencontainers.image.ref.name": "opcr.io/jimmyraywv/pacbook:v0.1.0-cecfc949ea",
+                "org.opencontainers.image.title": "docker.io/jimmyraywv/pacbook",
+                "org.openpolicyregistry.type": "policy"
+            }
+        }
+    ]
+}

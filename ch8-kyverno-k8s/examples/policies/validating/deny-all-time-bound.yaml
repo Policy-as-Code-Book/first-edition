@@ -1,0 +1,43 @@
+#apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: time-bound-policy
+  annotations:
+    pod-policies.kyverno.io/autogen-controllers: ""
+    policies.kyverno.io/title: Time-Bound Policy
+    policies.kyverno.io/category: Other
+    policies.kyverno.io/minversion: 1.9.0
+    kyverno.io/kyverno-version: 1.9.0
+    kyverno.io/kubernetes-version: "1.24"
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Denies all pods during maintenance window     
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+    - name: no-pods-during-maintenance
+      match:
+        any:
+        - resources:
+            kinds:
+            - Pod
+            namespaces:
+            - policy-test
+      preconditions:
+        all:
+          # Get the hour of the current time
+        - key: "{{ time_now_utc().time_to_cron(@).split(@,' ') | [1].to_number(@) }}"
+          operator: AnyIn
+          # Only operate during business hours, 8am-5pm EST, in UTC
+          value: 1-10
+        - key: "{{request.operation}}"
+          operator: AnyIn
+          value:
+          - CREATE
+          - UPDATE
+      validate:
+        message: "No pods during maintenance window."
+        deny: {}
+

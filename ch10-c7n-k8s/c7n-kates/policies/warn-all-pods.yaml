@@ -1,0 +1,66 @@
+policies:
+  - name: 'warn-all-pods'
+    resource: 'k8s.pod'
+    mode:
+      type: k8s-admission
+      on-match: warn
+      operations:
+        - CREATE
+        - UPDATE
+  - name: 'auto-label-userinfo'
+    resource: 'k8s.pod'
+    mode:
+      type: k8s-admission
+      on-match: allow
+      operations:
+        - CREATE
+        - UPDATE
+    filters:
+      - type: value
+        key: metadata.labels.test
+        value: c7n
+    actions:
+      - type: auto-label-user
+        key: owner
+  - name: 'label-on-op'
+    resource: 'k8s.pod'
+    mode:
+      type: k8s-admission
+      on-match: allow
+      operations:
+        - CREATE
+        - UPDATE
+    filters:
+      - type: value
+        key: metadata.labels.test
+        value: c7n
+    actions:
+      - type: event-label
+        labels:
+          touched-by: c7n-kube
+  # - name: missing-required-labels-pods
+  #   mode:
+  #     type: k8s-admission
+  #     on-match: deny
+  #     operations:
+  #       - CREATE
+  #       - UPDATE
+  #   description: |
+  #     The following labels are required on all pods:
+
+  #     app
+  #     billing
+  #     env
+  #     owner
+  #   resource: k8s.pod
+  #   filters:
+  #     - type: value
+  #       key: metadata.labels.test
+  #       value: c7n
+  #     - or:
+  #       - metadata.labels.app: absent
+  #       - metadata.labels.billing: absent
+  #       - metadata.labels.env: absent
+  #       - metadata.labels.owner": absent
+
+

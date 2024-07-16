@@ -1,0 +1,10 @@
+{
+	"records": [
+		{
+			"key": "common-functions",
+			"source": "./common/functions.sentinel",
+			"sourceSum": "",
+			"dest": "./ch12-iac/examples/sentinel/policies/gcp/common/functions.sentinel"
+		}
+	]
+}

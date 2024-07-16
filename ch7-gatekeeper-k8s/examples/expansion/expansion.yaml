@@ -1,0 +1,15 @@
+apiVersion: expansion.gatekeeper.sh/v1alpha1
+kind: ExpansionTemplate
+metadata:
+  name: expand-deployments
+spec:
+  applyTo:
+    - groups: ["apps"]
+      kinds: ["DeamonSet", "Deployment", "Job", "ReplicaSet", "ReplicationController", "StatefulSet"]
+      versions: ["v1"]
+  templateSource: "spec.template"
+  enforcementAction: "deny"
+  generatedGVK:
+    kind: "Pod"
+    group: ""
+    version: "v1"

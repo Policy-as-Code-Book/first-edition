@@ -1,0 +1,65 @@
+{
+    "kind": "AdmissionReview",
+    "apiVersion": "admission.k8s.io/v1",
+    "request": {
+        "uid": "d44c6009-1a75-428d-80ac-ba2ad13b985e",
+        "kind": {
+            "group": "",
+            "version": "v1",
+            "kind": "Pod"
+        },
+        "resource": {
+            "group": "",
+            "version": "v1",
+            "resource": "pods"
+        },
+        "requestKind": {
+            "group": "",
+            "version": "v1",
+            "kind": "Pod"
+        },
+        "requestResource": {
+            "group": "",
+            "version": "v1",
+            "resource": "pods"
+        },
+        "name": "test-pod",
+        "namespace": "test",
+        "operation": "CREATE",
+        "userInfo": {
+            "username": "kube-review",
+            "uid": "66befdaa-1097-4249-9279-4fe5ed2fa4f3"
+        },
+        "object": {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "test-pod",
+                "namespace": "test",
+                "creationTimestamp": null
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "test-pause",
+                        "image": "public.ecr.aws/eks-distro/kubernetes/pause:3.2",
+                        "resources": {},
+                        "imagePullPolicy": "Always",
+                        "securityContext": {
+                            "runAsUser": 1000,
+                            "readOnlyRootFilesystem": true,
+                            "allowPrivilegeEscalation": false
+                        }
+                    }
+                ]
+            },
+            "status": {}
+        },
+        "oldObject": null,
+        "dryRun": true,
+        "options": {
+            "kind": "CreateOptions",
+            "apiVersion": "meta.k8s.io/v1"
+        }
+    }
+}

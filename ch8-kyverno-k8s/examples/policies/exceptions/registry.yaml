@@ -1,0 +1,22 @@
+apiVersion: kyverno.io/v2alpha1
+kind: PolicyException
+metadata:
+  name: policy-test-exception
+  namespace: policy-test
+spec:
+  exceptions:
+  - policyName: restrict-image-registries
+    ruleNames:
+    - detect-deprecated-registry
+    - autogen-detect-deprecated-registry
+  match:
+    any:
+    - resources:
+        kinds:
+        - Pod
+        - Deployment
+        namespaces:
+        - policy-test
+        names:
+        - test
+        - test-pod

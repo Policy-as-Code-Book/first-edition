@@ -1,0 +1,44 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: label-pods
+  namespace: opa
+  labels:
+    app: opa
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+    openpolicyagent.org/policy: rego
+data:
+  main: |
+    package library.kubernetes.admission.mutating
+
+    ############################################################
+    # PATCH rules 
+    #
+    # Note: All patch rules should start with `isValidRequest` and `isCreateOrUpdate`
+    ############################################################
+
+    # add billing,env,owner labels to pods
+    patch[patchCode] {
+      isValidRequest
+      isCreateOrUpdate
+      input.request.kind.kind == "Pod"
+      not hasLabelValue(input.request.object, "billing", "lob-cc")
+      patchCode = makeLabelPatch("add", "billing", "lob-cc", "")
+    }
+    patch[patchCode] {
+      isValidRequest
+      isCreateOrUpdate
+      input.request.kind.kind == "Pod"
+      not hasLabelValue(input.request.object, "env", "dev")
+      patchCode = makeLabelPatch("add", "env", "dev", "")
+    }
+    patch[patchCode] {
+      isValidRequest
+      isCreateOrUpdate
+      input.request.kind.kind == "Pod"
+      not hasLabelValue(input.request.object, "owner", "jimmy")
+      patchCode = makeLabelPatch("add", "owner", "jimmy", "")
+    }
+

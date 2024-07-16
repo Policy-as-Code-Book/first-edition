@@ -1,0 +1,2 @@
+eksctl create cluster -f eks.yaml
+eksctl delete cluster -f eks.yaml --disable-nodegroup-eviction --wait

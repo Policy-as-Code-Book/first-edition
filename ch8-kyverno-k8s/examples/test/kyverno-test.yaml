@@ -1,0 +1,25 @@
+apiVersion: cli.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: kyverno-test
+policies:
+  - registry-mutate.yaml
+  - registry-validate.yaml
+resources:
+  - resources.yaml
+results:
+- policy: restrict-image-registries
+  isValidatingAdmissionPolicy: true
+  rule: restrict-image-registries
+  resources:
+  - policy-test/test-pod-bad
+  kind: Pod
+  result: fail
+- policy: restrict-image-registries
+  isValidatingAdmissionPolicy: true
+  rule: restrict-image-registries
+  resources:
+  - policy-test/test-pod-good
+  kind: Pod
+  result: pass
+

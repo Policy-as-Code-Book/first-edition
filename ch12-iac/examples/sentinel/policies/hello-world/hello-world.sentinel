@@ -1,0 +1,11 @@
+h = "Hello"
+s = " "
+w = "World"
+
+func msg(m) {
+	return m + w
+}
+
+main = rule {
+	print(msg(h + s))
+}

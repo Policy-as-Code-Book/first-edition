@@ -1,0 +1,14 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAnswerVerification
+metadata:
+  name: pod-answers
+  labels:
+    policy.jimmyray.io/gatekeeper: constraint
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces:
+      - "policy-test"

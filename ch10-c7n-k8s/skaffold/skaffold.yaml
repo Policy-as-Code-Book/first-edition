@@ -1,0 +1,7 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: skaffold
+manifests:
+  rawYaml:
+    - k8s-manifest.yaml

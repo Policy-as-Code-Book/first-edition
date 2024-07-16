@@ -1,0 +1,16 @@
+{
+	"records": [
+		{
+			"key": "required_labels",
+			"source": "./required_labels.sentinel",
+			"sourceSum": "",
+			"dest": "./ch12-iac/examples/sentinel/policies/gcp/required_labels.sentinel"
+		},
+		{
+			"key": "gcp",
+			"source": "./required_labels.sentinel",
+			"sourceSum": "",
+			"dest": "./ch12-iac/examples/sentinel/policies/gcp/required_labels.sentinel"
+		}
+	]
+}

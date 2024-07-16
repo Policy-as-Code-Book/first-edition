@@ -1,0 +1,42 @@
+apiVersion: policy.jspolicy.com/v1beta1
+kind: JsPolicy
+metadata:
+  name: "npol.ns.jimmyray.io"
+spec:
+  operations: ["CREATE"]
+  resources: ["namespaces"]
+  apiGroups: [""]
+  type: Controller
+  objectSelector:
+    matchLabels:
+      npol: "enabled"
+  javascript: |
+    const npolName = "deny-all"
+    const kind = "NetworkPolicy"
+    const apiVersion = "networking.k8s.io/v1"
+    const npol = get(kind, apiVersion, request.name + "/" + npolName);
+    
+    if (!npol) {
+      const created = create({
+        "kind": kind,
+        "apiVersion": apiVersion,
+        "metadata": {
+          "name": npolName,
+          "namespace": request.name
+        },
+        "spec": {
+          "podSelector": {},
+          "policyTypes": [
+            "Ingress",
+            "Egress"
+          ]
+        }
+      });
+
+      if (!created.ok && created.reason !== "AlreadyExists") {
+        requeue(created.message);
+      } else {
+        print(`created ${kind} ${request.name}/${npolName}`);
+      }
+    }
+    

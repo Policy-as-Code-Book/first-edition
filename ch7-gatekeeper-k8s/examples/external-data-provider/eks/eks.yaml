@@ -1,0 +1,92 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: pac
+  region: us-east-1
+  version: "1.28"
+  tags:
+    owner: jimmyray
+    env: dev
+    billing: lob-cc
+
+iam:
+  withOIDC: true
+
+# secretsEncryption:
+#   keyARN: "arn:aws:kms:us-east-2:123456789012:key/<KEY_ID>"
+
+vpc:
+  id: "vpc-..."
+  cidr: "10.41.54.0/23"
+  subnets:
+    private:
+      private-1:
+        id: "subnet-..."
+        cidr: "10.41.55.0/25"
+        az: us-east-1a
+      private-2:
+        id: "subnet-..."
+        cidr: "10.41.55.128/25"
+        az: us-east-1b
+    public:
+      public-1:
+        id: "subnet-..."
+        cidr: "10.41.54.0/27"
+        az: us-east-1a
+      public-2:
+        id: "subnet-..."
+        cidr: "10.41.54.32/27"
+        az: us-east-1b
+
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["*"]
+
+addons:
+  - name: vpc-cni
+    version: latest
+    attachPolicyARNs:
+      - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+  - name: kube-proxy
+    version: latest
+  - name: coredns
+    version: latest 
+    
+managedNodeGroups:
+  - name: al2
+    amiFamily: AmazonLinux2
+    labels:
+      owner: jimmy
+      env: dev
+      billing: lob-cc
+    instanceType: m5.xlarge   
+    instanceName: pac
+    subnets:
+      - private-1
+      - private-2
+    minSize: 2
+    desiredCapacity: 2
+    maxSize: 3
+    volumeSize: 100
+    volumeType: gp3
+    # volumeEncrypted: true
+    # volumeKmsKeyID: <KEY_ID>
+    disableIMDSv1: true
+    disablePodIMDS: true
+    privateNetworking: true # if only 'Private' subnets are given, this must be enabled
+    tags:
+      owner: jimmyray
+      env: dev
+      billing: lob-cc
+    iam:
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+

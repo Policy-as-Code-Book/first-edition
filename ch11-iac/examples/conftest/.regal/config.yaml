@@ -1,0 +1,56 @@
+rules:
+  idiomatic:
+    use-some-for-output-vars:
+      level: error
+      ignore:
+        files:
+          - "*_test.rego"
+    no-defined-entrypoint:
+      level: ignore  
+  style:
+    prefer-some-in-iteration:
+      level: error
+      ignore:
+        files:
+          - "*_test.rego"
+    todo-comment:
+      # don't report on todo comments
+      level: warning
+    line-length:
+      # custom rule configuration
+      max-line-length: 100
+      # warn on too long lines, but don't fail
+      level: warning
+    opa-fmt:
+      # not needed as error is the default, but
+      # being explicit won't hurt
+      level: error
+      # Files can be ignored.
+      # In this example, test files are ignored
+      ignore:
+        files:
+          - "*_test.rego"
+  # custom:
+  #   # custom rule configuration
+  #   naming-convention:
+  #     level: error
+  #     conventions:
+  #       # ensure all package names start with "acmecorp" or "system"
+  #       - pattern: '^acmecorp\.[a-z_\.]+$|^system\.[a-z_\.]+$'
+  #         targets:
+  #           - package
+capabilities:
+  from:
+    # optionally configure Regal to target a specific version of OPA
+    # this will disable rules that has dependencies to e.g. built-in
+    # functions or features not supported by the given version
+    #
+    # if not provided, Regal will use the capabilities of the latest
+    # version of OPA available at the time of the Regal release
+    # engine: opa
+    # version: v0.60.0
+# ignore:
+#   # files can be excluded from all lint rules according to glob-patterns
+#   files:
+#     - file1.rego
+#     - "*_tmp.rego"

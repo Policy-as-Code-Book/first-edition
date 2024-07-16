@@ -1,0 +1,17 @@
+config:
+  webhooks:
+  - namespaceSelector:
+      matchExpressions:
+      - key: kubernetes.io/metadata.name
+        operator: NotIn
+        values:
+        - kube-system
+  # resourceFilters:
+  #   - '[*,*,*]'
+replicaCount: 1
+image:
+  pullPolicy: Always
+  tag: v1.11.4
+features:
+  validatingAdmissionPolicyReports:
+    enabled: true

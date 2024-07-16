@@ -1,0 +1,148 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: answers-config
+  namespace: answers
+  labels:
+    app: answers
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+data:
+  config.yaml: |
+    network:
+      serverAddress: ""
+      serverPort: "8443"
+      tls:
+        enabled: true
+        cert: "/certs/tls.crt"
+        key: "/certs/tls.key"
+    answers:
+    - answer: "It is certain."
+      code: "Y"
+    - answer: "It is decidedly so."
+      code: "Y"
+    - answer: "Without a doubt."
+      code: "Y"
+    - answer: "Yes definitely."
+      code: "Y"
+    - answer: "You may rely on it."
+      code: "Y"
+    - answer: "As I see it, yes."
+      code: "Y"
+    - answer: "Most likely."
+      code: "Y"
+    - answer: "Outlook good."
+      code: "Y"
+    - answer: "Yes."
+      code: "Y"
+    - answer: "Signs point to yes."
+      code: "Y"
+    - answer: "Reply hazy, try again."
+      code: "M"
+    - answer: "Ask again later."
+      code: "M"
+    - answer: "Better not tell you now."
+      code: "M"
+    - answer: "Cannot predict now."
+      code: "M"
+    - answer: "Concentrate and ask again."
+      code: "M"
+    - answer: "Don't count on it."
+      code: "N"
+    - answer: "My reply is no."
+      code: "N"
+    - answer: "My sources say no."
+      code: "N"
+    - answer: "Outlook not so good."
+      code: "N"
+    - answer: "Very doubtful."
+      code: "N"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: answers
+  namespace: answers
+  labels:
+    app: answers
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+spec:
+  selector:
+    app: answers
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 8443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: answers
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+  namespace: answers
+  name: answers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: answers
+  template:
+    metadata:
+      labels:
+        app: answers
+      name: answers
+    spec:
+      containers:
+        - name: answers
+          # image: jimmyraywv/answers:v0.1.0-eac99d1e79
+          image: jimmyraywv/answers:v0.1.0-arm64-1ca49ac292
+          imagePullPolicy: Always
+          securityContext:  
+            allowPrivilegeEscalation: false  
+            runAsUser: 1000  
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop: ["ALL"]  
+            seccompProfile:
+              type: "RuntimeDefault"
+          args:
+            - "--file=/config/config.yaml"
+            # - "--tls-cert-file=/certs/tls.crt"
+            # - "--tls-private-key-file=/certs/tls.key"
+          # command:
+          # - /main
+          volumeMounts:
+            - readOnly: true
+              mountPath: /certs
+              name: answers-server
+            - name: answers-config
+              mountPath: /config
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              scheme: HTTPS
+              port: 8443
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              scheme: HTTPS
+              port: 8443
+            initialDelaySeconds: 3
+            periodSeconds: 5
+      volumes:
+        - name: answers-server
+          secret:
+            secretName: answers-server
+        - name: answers-config
+          configMap:
+            name: answers-config

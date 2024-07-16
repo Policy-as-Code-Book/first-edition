@@ -1,0 +1,1 @@
+{"revision":"","roots":[""],"wasm":[{"entrypoint":"examples/ch2/hello","module":"/policy.wasm"}]}

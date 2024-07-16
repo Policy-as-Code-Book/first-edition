@@ -1,0 +1,119 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"kyverno.io/v1","kind":"ClusterPolicy","metadata":{"annotations":{"policies.kyverno.io/category":"Best Practices, EKS Best Practices","policies.kyverno.io/description":"Legacy k8s.gcr.io container image registry will be frozen in early April 2023 k8s.gcr.io image registry will be frozen from the 3rd of April 2023.   Images for Kubernetes 1.27 will not be available in the k8s.gcr.io image registry. Please read our announcement for more details. https://kubernetes.io/blog/2023/02/06/k8s-gcr-io-freeze-announcement/","policies.kyverno.io/minversion":"1.9.0","policies.kyverno.io/severity":"medium","policies.kyverno.io/subject":"Pod","policies.kyverno.io/title":"Restrict Image Registries"},"name":"restrict-image-registries"},"spec":{"background":true,"rules":[{"match":{"any":[{"resources":{"kinds":["Pod"]}}]},"name":"restrict-image-registries","validate":{"foreach":[{"deny":{"conditions":{"all":[{"key":"{{ element.image }}","operator":"Equals","value":"k8s.gcr.io/*"}]}},"list":"request.object.spec.[initContainers, ephemeralContainers, containers][]"}],"message":"The \"k8s.gcr.io\" image registry is deprecated. \"registry.k8s.io\" should now be used."}}],"validationFailureAction":"Enforce"}}
+    policies.kyverno.io/category: Best Practices, EKS Best Practices
+    policies.kyverno.io/description: Legacy k8s.gcr.io container image registry will
+      be frozen in early April 2023 k8s.gcr.io image registry will be frozen from
+      the 3rd of April 2023.   Images for Kubernetes 1.27 will not be available in
+      the k8s.gcr.io image registry. Please read our announcement for more details.
+      https://kubernetes.io/blog/2023/02/06/k8s-gcr-io-freeze-announcement/
+    policies.kyverno.io/minversion: 1.9.0
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/title: Restrict Image Registries
+  creationTimestamp: "2024-02-13T03:08:49Z"
+  generation: 2
+  name: restrict-image-registries
+  resourceVersion: "31772"
+  uid: 52c483e1-f6fc-4ae5-a650-6b61443a6c97
+spec:
+  admission: true
+  background: true
+  rules:
+  - match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    name: restrict-image-registries
+    skipBackgroundRequests: true
+    validate:
+      foreach:
+      - deny:
+          conditions:
+            all:
+            - key: '{{ element.image }}'
+              operator: Equals
+              value: k8s.gcr.io/*
+        list: request.object.spec.[initContainers, ephemeralContainers, containers][]
+      message: The "k8s.gcr.io" image registry is deprecated. "registry.k8s.io" should
+        now be used.
+  validationFailureAction: Enforce
+status:
+  autogen:
+    rules:
+    - exclude:
+        resources: {}
+      generate:
+        clone: {}
+        cloneList: {}
+      match:
+        any:
+        - resources:
+            kinds:
+            - DaemonSet
+            - Deployment
+            - Job
+            - StatefulSet
+            - ReplicaSet
+            - ReplicationController
+        resources: {}
+      mutate: {}
+      name: autogen-restrict-image-registries
+      skipBackgroundRequests: true
+      validate:
+        foreach:
+        - deny:
+            conditions:
+              all:
+              - key: '{{ element.image }}'
+                operator: Equals
+                value: k8s.gcr.io/*
+          list: request.object.spec.template.spec.[initContainers, ephemeralContainers,
+            containers][]
+        message: The "k8s.gcr.io" image registry is deprecated. "registry.k8s.io"
+          should now be used.
+    - exclude:
+        resources: {}
+      generate:
+        clone: {}
+        cloneList: {}
+      match:
+        any:
+        - resources:
+            kinds:
+            - CronJob
+        resources: {}
+      mutate: {}
+      name: autogen-cronjob-restrict-image-registries
+      skipBackgroundRequests: true
+      validate:
+        foreach:
+        - deny:
+            conditions:
+              all:
+              - key: '{{ element.image }}'
+                operator: Equals
+                value: k8s.gcr.io/*
+          list: request.object.spec.jobTemplate.spec.template.spec.[initContainers,
+            ephemeralContainers, containers][]
+        message: The "k8s.gcr.io" image registry is deprecated. "registry.k8s.io"
+          should now be used.
+  conditions:
+  - lastTransitionTime: "2024-02-13T22:42:52Z"
+    message: Ready
+    reason: Succeeded
+    status: "True"
+    type: Ready
+  ready: true
+  rulecount:
+    generate: 0
+    mutate: 0
+    validate: 1
+    verifyimages: 0
+  validatingadmissionpolicy:
+    generated: false
+    message: ""

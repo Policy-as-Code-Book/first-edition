@@ -1,0 +1,47 @@
+{
+    "level": "info",
+    "ts": 1672203970.5445209,
+    "logger": "mutation",
+    "msg": "Mutation applied",
+    "process": "mutation",
+    "Mutation Id": "6c2222b1-5beb-4dbb-85cb-8ae6217a1db4",
+    "event_type": "mutation_applied",
+    "resource_group": "",
+    "resource_kind": "Pod",
+    "resource_api_version": "v1",
+    "resource_namespace": "policy-test",
+    "resource_name": "test-pod",
+    "iteration_0": "AssignMetadata//label-billing:1, AssignMetadata//label-env:1, AssignMetadata//label-owner:1"
+}
+
+{
+    "level": "info",
+    "ts": 1672262677.1373708,
+    "logger": "mutation",
+    "msg": "Mutation applied",
+    "process": "mutation",
+    "Mutation Id": "2e223bf5-73bb-4e55-8e75-d778d5b32cbc",
+    "event_type": "mutation_applied",
+    "resource_group": "",
+    "resource_kind": "Pod",
+    "resource_api_version": "v1",
+    "resource_namespace": "policy-test",
+    "resource_name": "test-pod",
+    "iteration_0": "AssignMetadata//label-billing:1, AssignMetadata//label-env:1, AssignMetadata//label-owner:1"
+}
+
+{
+    "level": "info",
+    "ts": 1672269822.9220872,
+    "logger": "mutation",
+    "msg": "Mutation applied",
+    "process": "mutation",
+    "Mutation Id": "ce1a1494-cad0-4cfc-96cc-192aca897f2e",
+    "event_type": "mutation_applied",
+    "resource_group": "",
+    "resource_kind": "Pod",
+    "resource_api_version": "v1",
+    "resource_namespace": "policy-test",
+    "resource_name": "another-test-pod",
+    "iteration_0": "Assign//add-seccomp:3"
+}

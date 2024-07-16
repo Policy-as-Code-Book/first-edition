@@ -1,0 +1,33 @@
+import "types"
+
+list_in_list = func(l1,l2) {
+
+    if types.type_of(l1) is "undefined" {
+        print("List 1 is undefined.")
+        return false
+    }
+
+    if types.type_of(l2) is "undefined" {
+        print("List 2 is undefined.")
+        return false
+    }
+
+    if length(l1) is 0 {
+        print("Length of list 1 is 0.")
+        return false
+    }
+
+    if length(l1) > length(l2) {
+        print("Length of list 1 is greater than length of list 2.")
+        return false
+    }
+
+    for l1 as _, value {
+        if l2 not contains value {
+            print(value,"not found in list 2.")
+            return false
+        }
+    }
+
+    return true
+}

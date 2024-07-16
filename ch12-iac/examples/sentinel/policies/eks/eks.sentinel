@@ -1,0 +1,55 @@
+import "tfplan/v2" as tfplan
+
+param p_eks_version default ["1.26","1.27"]
+param p_region default ["us-east-1","us-west-2"]
+param p_tf_version default "1.5.5"
+
+print("Parameters:\np_eks_version =",p_eks_version)
+print("p_region =",p_region)
+print("p_tf_version =",p_tf_version)
+print("\nTFPlan Values:\nEKS Version =",tfplan.variables.cluster_version.value)
+print("Region =",tfplan.variables.region.value)
+print("Terraform Version =",tfplan.terraform_version)
+
+var_eks_version = rule {
+	tfplan.variables.cluster_version.value in p_eks_version
+}
+
+var_region = rule {
+	tfplan.variables.region.value in p_region
+}
+
+tf_version = rule {
+	tfplan.terraform_version == p_tf_version
+}
+
+# Validate managed EKS clusters
+invalid_eks_versions = func() {
+    bads = []
+	
+	eks_clusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "aws_eks_cluster" and
+        resource_changes.mode is "managed" and
+        (resource_changes.change.actions contains "create" or
+            resource_changes.change.actions is ["update"])
+	}
+
+    for eks_clusters as address, e {
+        if e.change.after.version not in p_eks_version {
+			print("EKS cluster", address, "has invalid version:",
+				e.change.after.version)
+				append(bads, address)
+		} 
+    }
+
+    return bads
+}
+
+main = rule {
+	length(invalid_eks_versions()) is 0 and
+	var_eks_version and
+	var_region and
+	tf_version
+}
+
+

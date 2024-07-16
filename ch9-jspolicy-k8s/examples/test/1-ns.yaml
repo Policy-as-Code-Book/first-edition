@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: policy-test
+  annotations:
+    annotation-one: annotation-one-data
+  labels:
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/warn: restricted
+    app: test
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+    policy: enabled
+    npol: enabled
+
+

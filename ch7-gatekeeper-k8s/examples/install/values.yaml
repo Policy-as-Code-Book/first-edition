@@ -1,0 +1,8 @@
+logDenies: true
+replicas: 1
+version: v3.15.0
+controllerManager:
+  exemptNamespaces: ["kube-system"]
+enableGeneratorResourceExpansion: true
+enableExternalData: true
+externaldataProviderResponseCacheTTL: 0

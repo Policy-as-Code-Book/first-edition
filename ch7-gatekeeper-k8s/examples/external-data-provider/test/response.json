@@ -1,0 +1,18 @@
+{
+    "apiVersion": "externaldata.gatekeeper.sh/v1alpha1",
+    "kind": "ProviderResponse",
+    "response": {
+        "idempotent": true,
+        "items": [
+            {
+                "key": "gcr.io/google-containers/pause:3.2",
+                "value": "It is certain.:Y"
+            },
+            {
+                "key": "gcr.io/google-containers/pause:3.3",
+                "value": "Don't count on it.:N",
+                "Error": "DENIED"
+            }
+        ]
+    }
+}

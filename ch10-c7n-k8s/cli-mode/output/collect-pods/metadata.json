@@ -1,0 +1,73 @@
+{
+  "policy": {
+    "name": "collect-pods",
+    "description": "Collects pods with label test:c7n\n",
+    "resource": "k8s.pod",
+    "filters": [
+      {
+        "type": "value",
+        "key": "metadata.labels.test",
+        "value": "c7n"
+      }
+    ]
+  },
+  "version": "0.9.34",
+  "execution": {
+    "id": "e63b751e-f356-491e-bb37-b125e48481f0",
+    "start": 1710437407.167018,
+    "end_time": 1710437407.2023628,
+    "duration": 0.035344839096069336
+  },
+  "config": {
+    "region": "",
+    "regions": [],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": null,
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": "output",
+    "cache_period": 0,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "policies/collect-pods.yaml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": 1,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {},
+  "metrics": [
+    {
+      "MetricName": "ResourceCount",
+      "Timestamp": "2024-03-14T13:30:07.201278",
+      "Value": 1,
+      "Unit": "Count"
+    },
+    {
+      "MetricName": "ResourceTime",
+      "Timestamp": "2024-03-14T13:30:07.201281",
+      "Value": 0.03382301330566406,
+      "Unit": "Seconds"
+    },
+    {
+      "MetricName": "ActionTime",
+      "Timestamp": "2024-03-14T13:30:07.202359",
+      "Value": 9.5367431640625e-07,
+      "Unit": "Seconds"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sdepregistry
+  labels:
+    policy.jimmyray.io/gatekeeper: template 
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sDepRegistry
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          type: object
+          properties:
+            allowedOps:
+              type: array
+              items:
+                type: string
+            allowedRegistries:
+              type: array
+              items:
+                type: string
+            errMsg:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sdepregistry
+
+        violation[{"msg": msg, "details": {}}] {
+          # input.review.operation = input.parameters.allowedOps[_]
+          image = input.review.object.spec.template.spec.containers[_].image
+          not reg_matches_any(image,input.parameters.allowedRegistries)
+          msg = sprintf("%v: %v image is not sourced from an authorized registry. Resource ID (ns/name/kind): %v/%v/%v", 
+          [input.parameters.errMsg,image,input.review.object.metadata.namespace,input.review.object.metadata.name,input.review.kind.kind])
+        }
+
+        reg_matches_any(str, patterns) {
+          reg_matches(str, patterns[_])
+        }
+
+        reg_matches(str, pattern) {
+          contains(str, pattern)
+        }
+

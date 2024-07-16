@@ -1,0 +1,2 @@
+kubectl delete -f ./deploy/.
+

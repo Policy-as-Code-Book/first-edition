@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+  namespace: test
+spec:
+  containers:
+    - name: test-pause
+      image: <IMAGE_URL>
+      imagePullPolicy: Always
+      securityContext:  
+        allowPrivilegeEscalation: false  
+        runAsUser: 1000  
+        readOnlyRootFilesystem: true

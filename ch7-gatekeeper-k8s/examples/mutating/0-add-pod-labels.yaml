@@ -1,0 +1,116 @@
+# apiVersion: mutations.gatekeeper.sh/v1
+# kind: AssignMetadata
+# metadata:
+#   name: label-owner
+# spec:
+#   match:
+#     scope: Namespaced
+#     name: test-pod
+#     kinds:
+#     - apiGroups: ["*"]
+#       kinds: ["Pod"]
+#     namespaces: ["policy-test"]
+#   location: "metadata.labels.owner"
+#   parameters:
+#     assign:
+#       value: "jimmy"
+# ---
+# apiVersion: mutations.gatekeeper.sh/v1
+# kind: AssignMetadata
+# metadata:
+#   name: label-billing
+# spec:
+#   match:
+#     scope: Namespaced
+#     name: test-pod
+#     kinds:
+#     - apiGroups: ["*"]
+#       kinds: ["Pod"]
+#     namespaces: ["policy-test"]
+#   location: "metadata.labels.billing"
+#   parameters:
+#     assign:
+#       value: "lob-cc"
+# ---
+# apiVersion: mutations.gatekeeper.sh/v1
+# kind: AssignMetadata
+# metadata:
+#   name: label-env
+# spec:
+#   match:
+#     scope: Namespaced
+#     name: test-pod
+#     kinds:
+#     - apiGroups: ["*"]
+#       kinds: ["Pod"]
+#     namespaces: ["policy-test"]
+#   location: "metadata.labels.env"
+#   parameters:
+#     assign:
+#       value: "dev"
+apiVersion: mutations.gatekeeper.sh/v1
+kind: AssignMetadata
+metadata:
+  name: label-owner
+spec:
+  match:
+    scope: Namespaced
+    kinds:
+    - apiGroups: ["*"]
+      kinds: ["Pod"]
+    namespaces: ["policy*"]
+  location: "metadata.labels.owner"
+  parameters:
+    assign:
+      value: "jimmy"
+---
+apiVersion: mutations.gatekeeper.sh/v1
+kind: AssignMetadata
+metadata:
+  name: label-billing
+spec:
+  match:
+    scope: Namespaced
+    kinds:
+    - apiGroups: ["*"]
+      kinds: ["Pod"]
+    namespaces: ["policy*"]
+  location: "metadata.labels.billing"
+  parameters:
+    assign:
+      value: "lob-cc"
+---
+apiVersion: mutations.gatekeeper.sh/v1
+kind: AssignMetadata
+metadata:
+  name: label-env
+spec:
+  match:
+    scope: Namespaced
+    kinds:
+    - apiGroups: ["*"]
+      kinds: ["Pod"]
+    namespaces: ["policy*"]
+  location: "metadata.labels.env"
+  parameters:
+    assign:
+      value: "dev"
+---
+apiVersion: mutations.gatekeeper.sh/v1
+kind: Assign
+metadata:
+  name: add-seccomp
+spec:
+  applyTo:
+  - groups: [""]
+    kinds: ["Pod"]
+    versions: ["v1"]
+  match:
+    namespaces: ["policy*"]
+  location: "spec.containers[name: *].securityContext.seccompProfile.type"
+  parameters:
+    pathTests:
+    - subPath: "spec.containers[name: *].securityContext.seccompProfile"
+      condition: MustNotExist
+    assign:
+      value: RuntimeDefault

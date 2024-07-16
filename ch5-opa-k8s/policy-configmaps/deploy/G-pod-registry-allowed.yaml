@@ -1,0 +1,80 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: pod-registry-allowed
+  namespace: opa
+  labels:
+    app: opa
+    billing: lob-cc
+    env: dev
+    owner: jimmy
+    openpolicyagent.org/policy: rego
+data:
+  main: |
+    package kubernetes.admission
+
+    import future.keywords.in
+
+    deny[msg] {
+      req_kind = "Pod"
+      req_op in allowed_ops
+      image = pod_containers[_].image
+      not reg_matches_any(image, valid_registries)
+      msg = sprintf("POD_INVALID: %q image is not sourced from an authorized registry. Valid registries are %q. Resource ID (ns/name/kind): %q", [image, allowed_regs, req_id])
+    }
+
+    req_op = op {
+      op := input.request.operation
+    }
+
+    pod_containers = c {
+      c := input.request.object.spec.containers
+    }
+
+    req_id = value {
+      value := sprintf("%v/%v/%v", [
+        req_namespace,
+        req_name,
+        req_kind,
+      ])
+    }
+
+    req_name = value {
+      value := input.request.object.metadata.name
+    }
+
+    else = value {
+      value := "NOT_FOUND"
+    }
+
+    req_namespace = value {
+      value := input.request.object.metadata.namespace
+    }
+
+    else = value {
+      value := "NOT_FOUND"
+    }
+
+    req_kind = value {
+      value := input.request.kind.kind
+    }
+
+    else = value {
+      value := "NOT_FOUND"
+    }
+
+    allowed_ops := ["CREATE", "UPDATE"]
+
+    allowed_regs := ["GOOD_REGISTRY", "VERY_GOOD_REGISTRY"]
+
+    valid_registries = {registry |
+      registry = allowed_regs[_]
+    }
+
+    reg_matches_any(str, patterns) {
+      reg_matches(str, patterns[_])
+    }
+
+    reg_matches(str, pattern) {
+      contains(str, pattern)
+    }

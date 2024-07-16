@@ -1,0 +1,51 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  annotations:
+    meta.helm.sh/release-name: gatekeeper
+    meta.helm.sh/release-namespace: gatekeeper-system
+  creationTimestamp: "2022-12-28T04:49:08Z"
+  generation: 2
+  labels:
+    app: gatekeeper
+    app.kubernetes.io/managed-by: Helm
+    chart: gatekeeper
+    gatekeeper.sh/system: "yes"
+    heritage: Helm
+    release: gatekeeper
+  name: gatekeeper-mutating-webhook-configuration
+  resourceVersion: "27870"
+  uid: a3cbf265-74f9-42b6-b7ca-281147d456c7
+webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNVENDQWhtZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREF0TVJNd0VRWURWUVFLRXdwbllYUmwKYTJWbGNHVnlNUll3RkFZRFZRUURFdzFuWVhSbGEyVmxjR1Z5TFdOaE1CNFhEVEl5TVRJeU9EQXpORGt4TUZvWApEVE15TVRJeU5UQTBORGt4TUZvd0xURVRNQkVHQTFVRUNoTUtaMkYwWld0bFpYQmxjakVXTUJRR0ExVUVBeE1OCloyRjBaV3RsWlhCbGNpMWpZVENDQVNJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFNM1MKTmJtaXc2YmpuQUZUcVBxV0wwVmQ0Y0JBdU0xcm90NFN0VUQ0NllXQis3a25GZWVDSytwMmxYU1ZMamNPcVR4TQpZaHhBalJKZC85SXp0d3FrLzhLYzg2bUhNVVorUmMvdmJYVU5YOVFtSkZuczlOd1JyUVc3TlBIUkdYVlVHcS9ICjBsM2cyaEQyOXlmbU5yWGwzUkRKWnd2L1lVamJ0Ui9ZVU9OYlJQVzFac0FkajUyVTEya2ZnTUpmL0QxbG9zdHQKbkQ5L2VNV3dWVjN6cUlVT1J4TXZvTTlDR3hnWW5aTEs3czlMSERrczBQNU9EWnRTbXV0WjdTQlNhQkY5VGV1QwpCNXo4Z2hIRGRtR0Uxd2VoSWV3Smo0QU0valhIcW1QSlIvYWdOaFFubnpRTDRML2FSL3Y1RDNCcUlieVg4OXlKCjJJblpoRmtncnEydk5lOXZndEVDQXdFQUFhTmNNRm93RGdZRFZSMFBBUUgvQkFRREFnS2tNQThHQTFVZEV3RUIKL3dRRk1BTUJBZjh3SFFZRFZSME9CQllFRk4wN1ZMdHdwZFhyZitTTzVsZDRqbzN3aDN3Mk1CZ0dBMVVkRVFRUgpNQStDRFdkaGRHVnJaV1Z3WlhJdFkyRXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBSEU0c29PVEZnemQ4QUtLCncwSTdHWEtYWXpJRmxJbkJObVRUbWY0bHVYSWJsMXJ1Q2NhRHdTSld2TEkycitqSU5EZEpneDlEZ0xyVGVvUk4KSDE4V0JRRDZDSFBJaDgxdlJVM2I4U2s4OXhLS2ZCalpUTmFOSi93ck5KREV3MW5FdmNDY0RoTnQ0S0pkRE5jZApOWEt2Zk5xZ0xUaDhmYVlUNFMzSVo0amcyN2MwK3pnNmhOT2h4M0dsODNudDNpM0RJWWFSV3VKR0haMitodjRHCjZDWm1rM3lwaHNBOGYzMTlMZGlxMUVlUmszM292d1JPbTdpeG85eHpOcUtlT3AyQnZKUnNlNCt3cGFYQVZzK3AKMUZ4bXlPbDZQV0NCa0U4SUVMeXJnU3FWdDVGTG9ZbHgrdDdJMWdXWmJ4dU1XeUo5Q29qb1VMZnpBL29DbTkydQpTYUYvM2xjPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    service:
+      name: gatekeeper-webhook-service
+      namespace: gatekeeper-system
+      path: /v1/mutate
+      port: 443
+  failurePolicy: Ignore
+  matchPolicy: Exact
+  name: mutation.gatekeeper.sh
+  namespaceSelector:
+    matchExpressions:
+    - key: admission.gatekeeper.sh/ignore
+      operator: DoesNotExist
+  objectSelector: {}
+  reinvocationPolicy: Never
+  rules:
+  - apiGroups:
+    - '*'
+    apiVersions:
+    - '*'
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - '*'
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 1

@@ -1,0 +1,4 @@
+curl -H 'Authorization: Bearer <TOKEN>' -o opa-conf.yaml '<STYRA_URL>/systems/<SYSTEM_ID>/assets/opa-config'
+
+opa run --server --config-file=opa-conf.yaml
+

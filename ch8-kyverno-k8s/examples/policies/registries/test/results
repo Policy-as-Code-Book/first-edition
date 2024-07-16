@@ -1,0 +1,13 @@
+$ kubectl kyverno test .
+
+Executing restrict-deprecated-registry...
+applying 1 policy to 2 resources...
+
+│───│──────────────────────────────│──────────────────────────────│───────────────────────────────│────────│
+│ # │ POLICY                       │ RULE                         │ RESOURCE                      │ RESULT │
+│───│──────────────────────────────│──────────────────────────────│───────────────────────────────│────────│
+│ 1 │ restrict-deprecated-registry │ restrict-deprecated-registry │ policy-test/Pod/test-pod-bad  │ Pass   │
+│ 2 │ restrict-deprecated-registry │ restrict-deprecated-registry │ policy-test/Pod/test-pod-good │ Pass   │
+│───│──────────────────────────────│──────────────────────────────│───────────────────────────────│────────│
+
+Test Summary: 2 tests passed and 0 tests failed

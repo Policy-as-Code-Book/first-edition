@@ -1,0 +1,11 @@
+policies:
+  - name: delete-pods
+    description: |
+      Deletes pods with label test:c7n
+    resource: k8s.pod
+    filters:
+      - type: value
+        key: metadata.labels.test
+        value: c7n
+    actions:
+      - type: delete

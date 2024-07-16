@@ -1,0 +1,10 @@
+{
+	"records": [
+		{
+			"key": "eks",
+			"source": "./eks.sentinel",
+			"sourceSum": "",
+			"dest": "./ch12-iac/examples/sentinel/policies/eks/eks.sentinel"
+		}
+	]
+}
