@@ -17,7 +17,7 @@ CONFIGS_DIRECTORY="generated/configs"
 SECRETS_DIRECTORY="generated/secrets"
 TEMPLATES_DIRECTORY="templates"
 
-cat $TEMPLATES_DIRECTORY/kubelet-api-admin-template.yaml | sed -e "s/__OWNER_VALUE__/${OWNER}/g"  | sed -e "s/__ENV_VALUE__/${ENV}/g" | sed -e "s/__BILLING_VALUE__/${BILLING}/g" > "$CONFIGS_DIRECTORY/kubelet-api-admin.yaml"
+cat $TEMPLATES_DIRECTORY/crb-kubelet-api-admin-template.yaml | sed -e "s/__OWNER_VALUE__/${OWNER}/g"  | sed -e "s/__ENV_VALUE__/${ENV}/g" | sed -e "s/__BILLING_VALUE__/${BILLING}/g" > "$CONFIGS_DIRECTORY/kubelet-api-admin.yaml"
 ${KUBECTL} apply -f $CONFIGS_DIRECTORY/kubelet-api-admin.yaml
 ${KUBECTL} label --overwrite namespace kube-system openpolicyagent.org/webhook=ignore
 
