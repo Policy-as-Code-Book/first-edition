@@ -1,0 +1,17 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kubelet-api-admin
+  labels:
+    app: opa
+    owner: __OWNER_VALUE__
+    env: __ENV_VALUE__
+    billing: __BILLING_VALUE__
+subjects:
+- kind: User
+  name: kube-apiserver-kubelet-client
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: system:kubelet-api-admin
+  apiGroup: rbac.authorization.k8s.io
